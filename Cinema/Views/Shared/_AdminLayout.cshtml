@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cinema</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Cinema.styles.css" asp-append-version="true" />
+    <link href="~/css/admin/dashboard.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <!-- Sidebar -->
+        <aside>
+            <div class="logo">CINIMA<small>ADMIN DASHBOARD</small></div>
+            <nav id="nav">
+                <button data-k="home">Home</button>
+                <button data-k="movies">Movies</button>
+                <button data-k="cats">Categories</button>
+                <button data-k="cin">Cinemas</button>
+                <button data-k="act">Actors</button>
+            </nav>
+        </aside>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+
+        <footer>
+            <span class="bebas">CINIMA</span>
+            <span>&copy; 2026 Cinima Admin Dashboard</span>
+            <span>Movies &middot; Cinemas &middot; Actors</span>
+        </footer>
+    </div>
+
+   
+
+    <!-- Add-movie drawer -->
+    <div class="drawer" id="drawer" aria-label="Add movie">
+        <h3>New movie</h3>
+
+        <label>
+            Name
+            <input placeholder="Movie name">
+        </label>
+        <label>
+            Description
+            <textarea rows="3"></textarea>
+        </label>
+
+        <div class="row">
+            <label>
+                Price (EGP)
+                <input type="number" placeholder="120">
+            </label>
+            <label>
+                Status
+                <select>
+                    <option>Showing</option>
+                    <option>Coming soon</option>
+                </select>
+            </label>
+        </div>
+
+        <label>
+            Date &amp; time
+            <input type="datetime-local">
+        </label>
+
+        <div class="row">
+            <label>Category <select><option>Action</option><option>Drama</option><option>Comedy</option><option>Horror</option><option>Sci-Fi</option></select></label>
+            <label>Cinema <select><option>Grand Hall</option><option>Nile Screen</option><option>Pyramid Plex</option></select></label>
+        </div>
+
+        <label>
+            Actors
+            <select multiple size="4"><option>Amina Fathy</option><option>Omar Reda</option><option>Salma Nabil</option><option>Karim Adel</option><option>Laila Hosny</option><option>Youssef Tarek</option></select>
+        </label>
+        <label>
+            Main image
+            <input type="file" accept="image/*">
+        </label>
+        <label>
+            Sub images
+            <input type="file" accept="image/*" multiple>
+        </label>
+
+        <button class="btn" data-close>Save movie</button>
+        <button class="btn ghost" data-close>Cancel</button>
+    </div>
+
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/admin/dashboard.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
