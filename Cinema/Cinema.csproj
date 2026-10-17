@@ -15,4 +15,9 @@
 		</PackageReference>
 		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\images\Actor\" />
+	  <Folder Include="wwwroot\images\Cinema\" />
+	</ItemGroup>
 </Project>

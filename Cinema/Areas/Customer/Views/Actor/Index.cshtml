@@ -1,0 +1,62 @@
+﻿@model List<Actor>
+<header class="page-hero">
+    <div>
+        <span class="hero-tag">Actors</span>
+        <h1>Our Actors</h1>
+        <p class="subtitle">Meet the stars of our movies</p>
+    </div>
+    <div class="hero-count">
+        <strong>@Model.Count()</strong>
+        <span>actors</span>
+    </div>
+</header>
+
+<form method="get" class="filter-bar">
+
+    <div class="filter-field filter-search">
+        <label for="search">Search</label>
+        <input type="text" id="search" name="Name" placeholder="e.g. Mona Zaki" />
+    </div>
+
+    <button type="submit" class="btn">Filter</button>
+</form>
+
+<div class="actor-grid">
+    @foreach(var item in Model)
+    {
+        <article class="actor-card">
+            <a href="#" class="actor-photo">
+                <img src="/images/Actor/@item.Img" alt="@item.Name" />
+            </a>
+            <div class="actor-body">
+                <h3 class="actor-name">@item.Name</h3>
+                <p class="actor-meta">4 movies</p>
+                <p class="actor-desc">@item.Description</p>
+            </div>
+        </article>
+    }
+
+</div>
+
+<nav aria-label="Page navigation example" class="d-flex justify-content-center align-items-center">
+    <ul class="pagination">
+        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="/Customer/Actor/Index?page=@(ViewBag.CurrentPage - 1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @for (var i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" href="/Customer/Actor/Index?page=@i">
+                    @i
+                </a>
+            </li>
+        }
+        <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="/Customer/Actor/Index?page=@(ViewBag.CurrentPage + 1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

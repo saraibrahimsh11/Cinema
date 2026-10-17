@@ -1,0 +1,68 @@
+﻿
+<div class="container">
+
+    <header class="page-hero">
+        <div>
+            <span class="hero-tag">Movies</span>
+            <h1>Now Showing</h1>
+            <p class="subtitle">Pick a movie and book your seat</p>
+        </div>
+        <div class="hero-count">
+            <strong>@Model.Count</strong>
+            <span>movies</span>
+        </div>
+    </header>
+
+    <form method="get" class="filter-bar">
+
+        <div class="filter-field filter-search">
+            <label for="search">Search</label>
+            <input type="text" id="search" name="Name" value="@Context.Request.Query["Name"]" placeholder="e.g. Inception" />
+        </div>
+
+        <button type="submit" class="btn">Filter</button>
+        <a class="btn-cancel" href="/Customer/Movie/Index">Clear</a>
+
+    </form>
+
+    <div class="movie-grid">
+        @foreach (var item in Model)
+        {
+            <article class="movie-card">
+                <a href="#" class="movie-poster">
+                    <img src="/images/Movie/@item.Img" alt="@item.Name" />
+                    <span class="movie-overlay">View details</span>
+                </a>
+                <div class="movie-body">
+                    <h3 class="movie-title">@item.Name</h3>
+                    <p class="movie-meta">@item.Category?.Name</p>
+                    <p class="movie-desc">@item.Description</p>
+                    <p class="movie-price">@item.Price EGP</p>
+                </div>
+            </article>
+        }
+    </div>
+
+    <nav aria-label="Page navigation" class="pager">
+        <ul class="pagination">
+            <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="/Customer/Movie/Index?page=@(ViewBag.CurrentPage - 1)&Name=@Context.Request.Query["Name"]" aria-label="Previous">
+                    <span aria-hidden="true">&lsaquo;</span>
+                </a>
+            </li>
+            @for (var i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" href="/Customer/Movie/Index?page=@i&Name=@Context.Request.Query["Name"]">@i</a>
+                </li>
+            }
+            <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="/Customer/Movie/Index?page=@(ViewBag.CurrentPage + 1)&Name=@Context.Request.Query["Name"]" aria-label="Next">
+                    <span aria-hidden="true">&rsaquo;</span>
+                </a>
+            </li>
+        </ul>
+        <p class="pager-info">Page @ViewBag.CurrentPage of @ViewBag.TotalPages</p>
+    </nav>
+
+</div>

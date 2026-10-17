@@ -2,105 +2,89 @@
     ViewData["Title"] = "Home Page";
 }
 
-<section class="page active" id="page-home">
-    <div class="top">
-        <div><h1>Home</h1><p>Tonight at a glance</p></div>
-    </div>
+<div class="container">
 
-    <section class="hero">
-        <div class="poster" style="background:linear-gradient(160deg,#C8213F,#3A0F2B)"><span>Midnight Run</span></div>
+    <header class="page-head">
         <div>
-            <span class="tag">NOW SHOWING · Fri 8:30 PM</span>
-            <h2>Midnight Run</h2>
-            <p>A courier has one night to cross a sleepless city with a package everyone wants.</p>
-            <span class="pill ok">Showing</span>
-            <span class="mut">Action · Grand Hall · 120 EGP</span>
+            <h1>Now Showing</h1>
+            <p class="subtitle">Pick a movie and book your seat</p>
         </div>
-    </section>
+    </header>
 
-    <div class="stats">
-        <div class="ticket"><b>6</b><span>Movies</span></div>
-        <div class="ticket"><b>5</b><span>Categories</span></div>
-        <div class="ticket"><b>3</b><span>Cinemas</span></div>
-        <div class="ticket"><b>6</b><span>Actors</span></div>
+    <div class="movie-grid">
+
+        <article class="movie-card">
+            <a href="#" class="movie-poster">
+                <img src="/images/movies/inception.jpg" alt="Inception" />
+                <span class="movie-overlay">View details</span>
+            </a>
+            <div class="movie-info">
+                <h3 class="movie-title">Inception</h3>
+                <p class="movie-meta">Sci-Fi</p>
+                <p class="movie-price">120 EGP</p>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <a href="#" class="movie-poster">
+                <img src="/images/movies/dark-knight.jpg" alt="The Dark Knight" />
+                <span class="movie-overlay">View details</span>
+            </a>
+            <div class="movie-info">
+                <h3 class="movie-title">The Dark Knight</h3>
+                <p class="movie-meta">Action</p>
+                <p class="movie-price">130 EGP</p>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <a href="#" class="movie-poster">
+                <img src="/images/movies/interstellar.jpg" alt="Interstellar" />
+                <span class="movie-overlay">View details</span>
+            </a>
+            <div class="movie-info">
+                <h3 class="movie-title">Interstellar</h3>
+                <p class="movie-meta">Sci-Fi</p>
+                <p class="movie-price">140 EGP</p>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <a href="#" class="movie-poster">
+                <img src="/images/movies/joker.jpg" alt="Joker" />
+                <span class="movie-overlay">View details</span>
+            </a>
+            <div class="movie-info">
+                <h3 class="movie-title">Joker</h3>
+                <p class="movie-meta">Drama</p>
+                <p class="movie-price">110 EGP</p>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <a href="#" class="movie-poster">
+                <span class="poster-placeholder">Coco</span>
+                <span class="movie-overlay">View details</span>
+            </a>
+            <div class="movie-info">
+                <h3 class="movie-title">Coco</h3>
+                <p class="movie-meta">Family</p>
+                <p class="movie-price">90 EGP</p>
+            </div>
+        </article>
+
+        <article class="movie-card">
+            <a href="#" class="movie-poster">
+                <span class="poster-placeholder">The Conjuring</span>
+                <span class="movie-overlay">View details</span>
+            </a>
+            <div class="movie-info">
+                <h3 class="movie-title">The Conjuring</h3>
+                <p class="movie-meta">Horror</p>
+                <p class="movie-price">100 EGP</p>
+            </div>
+        </article>
+
     </div>
 
-    <div class="sec"><h3>Now showing</h3></div>
-    <div class="table-wrap">
-        <table>
-            <thead><tr><th>Movie</th><th>Category</th><th>Cinema</th><th>Price</th><th>Time</th></tr></thead>
-            <tbody>
-                <tr><td>Midnight Run</td><td>Action</td><td>Grand Hall</td><td>120 EGP</td><td>Fri 8:30 PM</td></tr>
-                <tr><td>The Last Harbor</td><td>Drama</td><td>Nile Screen</td><td>100 EGP</td><td>Sat 6:00 PM</td></tr>
-                <tr><td>Hollow House</td><td>Horror</td><td>Grand Hall</td><td>110 EGP</td><td>Sun 10:00 PM</td></tr>
-                <tr><td>Salt and Sand</td><td>Drama</td><td>Pyramid Plex</td><td>95 EGP</td><td>Thu 7:30 PM</td></tr>
-            </tbody>
-        </table>
-    </div>
-</section>
-
-<section class="page" id="page-movies">
-    <div class="top">
-        <div><h1>Movies</h1><p>Posters, prices and showtimes</p></div>
-        <button class="btn" data-open>Add movie</button>
-    </div>
-
-    <div class="table-wrap">
-        <table>
-            <thead>
-                <tr><th>#</th><th>Name</th><th>Category</th><th>Cinema</th><th>Price</th><th>Status</th><th>Time</th><th>Actors</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>1</td><td>Midnight Run</td><td>Action</td><td>Grand Hall</td><td>120 EGP</td><td><span class="pill ok">Showing</span></td><td>Fri 8:30 PM</td><td>Amina Fathy, Omar Reda</td></tr>
-                <tr><td>2</td><td>The Last Harbor</td><td>Drama</td><td>Nile Screen</td><td>100 EGP</td><td><span class="pill ok">Showing</span></td><td>Sat 6:00 PM</td><td>Salma Nabil, Karim Adel</td></tr>
-                <tr><td>3</td><td>Laugh Track</td><td>Comedy</td><td>Pyramid Plex</td><td>90 EGP</td><td><span class="pill wn">Coming soon</span></td><td>Wed 9:00 PM</td><td>Laila Hosny</td></tr>
-                <tr><td>4</td><td>Hollow House</td><td>Horror</td><td>Grand Hall</td><td>110 EGP</td><td><span class="pill ok">Showing</span></td><td>Sun 10:00 PM</td><td>Omar Reda, Youssef Tarek</td></tr>
-                <tr><td>5</td><td>Orbit Seven</td><td>Sci-Fi</td><td>Nile Screen</td><td>140 EGP</td><td><span class="pill wn">Coming soon</span></td><td>Fri 7:00 PM</td><td>Amina Fathy, Salma Nabil, Youssef Tarek</td></tr>
-                <tr><td>6</td><td>Salt and Sand</td><td>Drama</td><td>Pyramid Plex</td><td>95 EGP</td><td><span class="pill ok">Showing</span></td><td>Thu 7:30 PM</td><td>Karim Adel, Laila Hosny</td></tr>
-            </tbody>
-        </table>
-    </div>
-</section>
-
-
-
-<section class="page" id="page-cin">
-    <div class="top">
-        <div><h1>Cinemas</h1><p>Your venues</p></div>
-        <button class="btn" data-open>Add cinema</button>
-    </div>
-
-    <div class="table-wrap">
-        <table>
-            <thead><tr><th>#</th><th>Name</th><th>City</th><th>Movies scheduled</th></tr></thead>
-            <tbody>
-                <tr><td>1</td><td>Grand Hall</td><td>Giza</td><td>2</td></tr>
-                <tr><td>2</td><td>Nile Screen</td><td>Cairo</td><td>2</td></tr>
-                <tr><td>3</td><td>Pyramid Plex</td><td>Giza</td><td>2</td></tr>
-            </tbody>
-        </table>
-    </div>
-</section>
-
-<section class="page" id="page-act">
-    <div class="top">
-        <div><h1>Actors</h1><p>Cast linked to your movies</p></div>
-        <button class="btn" data-open>Add actor</button>
-    </div>
-
-    <div class="table-wrap">
-        <table>
-            <thead><tr><th>#</th><th>Name</th><th>Movies</th></tr></thead>
-            <tbody>
-                <tr><td>1</td><td>Amina Fathy</td><td>Midnight Run, Orbit Seven</td></tr>
-                <tr><td>2</td><td>Omar Reda</td><td>Midnight Run, Hollow House</td></tr>
-                <tr><td>3</td><td>Salma Nabil</td><td>The Last Harbor, Orbit Seven</td></tr>
-                <tr><td>4</td><td>Karim Adel</td><td>The Last Harbor, Salt and Sand</td></tr>
-                <tr><td>5</td><td>Laila Hosny</td><td>Laugh Track, Salt and Sand</td></tr>
-                <tr><td>6</td><td>Youssef Tarek</td><td>Hollow House, Orbit Seven</td></tr>
-            </tbody>
-        </table>
-    </div>
-</section>
-
-
+</div>

@@ -1,19 +1,63 @@
-﻿<section class="page" id="page-cats">
-    <div class="top">
-        <div><h1>Categories</h1><p>Group movies by genre</p></div>
-        <button class="btn" data-open>Add category</button>
+﻿@model List<Category>
+<header class="page-head">
+    <div>
+        <h1>Categories</h1>
+        <p class="subtitle">Group movies by genre</p>
     </div>
+    <a class="btn" href="/Admin/Category/Create">Add category</a>
+</header>
 
-    <div class="table-wrap">
-        <table>
-            <thead><tr><th>#</th><th>Category</th><th>Movies</th></tr></thead>
-            <tbody>
-                <tr><td>1</td><td>Action</td><td>1</td></tr>
-                <tr><td>2</td><td>Drama</td><td>2</td></tr>
-                <tr><td>3</td><td>Comedy</td><td>1</td></tr>
-                <tr><td>4</td><td>Horror</td><td>1</td></tr>
-                <tr><td>5</td><td>Sci-Fi</td><td>1</td></tr>
-            </tbody>
-        </table>
-    </div>
-</section>
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th class="actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td class="actions">
+                        <div class="actions-group">
+                            <a class="row-btn update" href="/Admin/Category/Update/@item.Id">Update</a>
+                            <a class="row-btn delete delete-confirm" href="/Admin/Category/Delete/@item.Id">Delete</a>                        
+                        </div>
+                    </td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.querySelectorAll('.delete-confirm').forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const url = this.href;
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+</script>
