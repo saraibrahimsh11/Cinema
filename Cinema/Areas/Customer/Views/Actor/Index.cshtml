@@ -38,25 +38,24 @@
 
 </div>
 
-<nav aria-label="Page navigation example" class="d-flex justify-content-center align-items-center">
+<nav aria-label="Page navigation" class="pager">
     <ul class="pagination">
         <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
-            <a class="page-link" href="/Customer/Actor/Index?page=@(ViewBag.CurrentPage - 1)" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
+            <a class="page-link" href="/Customer/Actor/Index?page=@(ViewBag.CurrentPage - 1)&Name=@Context.Request.Query["Name"]" aria-label="Previous">
+                <span aria-hidden="true">&larr;</span> Prev
             </a>
         </li>
         @for (var i = 1; i <= ViewBag.TotalPages; i++)
         {
             <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
-                <a class="page-link" href="/Customer/Actor/Index?page=@i">
-                    @i
-                </a>
+                <a class="page-link" href="/Customer/Actor/Index?page=@i&Name=@Context.Request.Query["Name"]">@i</a>
             </li>
         }
         <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
-            <a class="page-link" href="/Customer/Actor/Index?page=@(ViewBag.CurrentPage + 1)" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
+            <a class="page-link" href="/Customer/Actor/Index?page=@(ViewBag.CurrentPage + 1)&Name=@Context.Request.Query["Name"]" aria-label="Next">
+                Next <span aria-hidden="true">&rarr;</span>
             </a>
         </li>
     </ul>
+    <p class="pager-info">Page @ViewBag.CurrentPage of @ViewBag.TotalPages</p>
 </nav>

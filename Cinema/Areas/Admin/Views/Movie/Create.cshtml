@@ -1,4 +1,5 @@
-﻿<div class="container">
+﻿@Model MovieVM
+<div class="container">
 
     <header class="page-head">
         <div>
@@ -16,8 +17,69 @@
         </div>
 
         <div class="form-group">
+            <label for="Status">Status</label>
+            <select class="form-control" id="Status" name="Status">
+                <option value="" disabled selected hidden>-- Select status --</option>
+                <option value="NowShowing">Now Showing</option>
+                <option value="ComingSoon">Coming Soon</option>
+                <option value="Ended">Ended</option>
+            </select>
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
             <label for="MainImg" class="form-label">MainImg</label>
             <input name="ImageFile" type="file" class="form-control" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <label for="SubImages" class="form-label">SubImages</label>
+            <input name="SubImages" type="file" class="form-control" accept="image/*" multiple>
+        </div>
+
+        <div class="form-group">
+            <label for="Price">Price</label>
+            <input class="form-control" id="Price" name="Price" type="number" />
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="DateTime">DateTime</label>
+            <input class="form-control" id="DateTime" name="DateTime" type="datetime-local" />
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Quantity">Rate</label>
+            <input class="form-control" id="Rate" name="Rate" type="number" />
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Quantity">Quantity</label>
+            <input class="form-control" id="Quantity" name="Quantity" type="number" />
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Status">Status</label>
+            <select class="form-control" id="Status" name="CategoryId">
+                @foreach(var item in Model.Categories)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Status">Status</label>
+            <select class="form-control" id="Status" name="Status">
+                <option value="" disabled selected hidden>-- Select status --</option>
+                <option value="ComingSoon">Coming Soon</option>
+                <option value="Ended">Ended</option>
+            </select>
+            <span class="field-error"></span>
         </div>
 
         <div class="form-group">

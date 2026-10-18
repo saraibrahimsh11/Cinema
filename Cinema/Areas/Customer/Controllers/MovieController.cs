@@ -1,5 +1,6 @@
 ﻿using Cinema.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static System.Net.WebRequestMethods;
 
 namespace Cinema.Areas.Customer.Controllers
@@ -11,6 +12,7 @@ namespace Cinema.Areas.Customer.Controllers
         public IActionResult Index(string Name , int page = 1)
         {
             var movies = _context.Movies.AsQueryable();
+            movies = movies.Include(m => m.Category).Include(m => m.Cinema);
 
             // filter 
             if(Name != null)

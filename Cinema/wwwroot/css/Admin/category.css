@@ -244,3 +244,42 @@
     color: #8f7b98;
     font-size: 11px;
 }
+
+
+/*---------------------------Add select Status to Movie--------------------------*/
+/*------------------Select (form)--------------------------*/
+
+.form-panel select {
+    display: block;
+    width: 100%;
+    padding: 13px 44px 13px 16px;
+    font: 400 17px "DM Sans", sans-serif;
+    color: #ffffff !important;
+    background-color: #3a2d48 !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23e8b030' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 14px 9px;
+    border: 1px solid #4a3a5c !important;
+    border-radius: 12px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    color-scheme: dark;
+}
+
+    .form-panel select:focus {
+        border-color: #e8b030 !important;
+        box-shadow: 0 0 0 3px rgba(232, 176, 48, .15);
+    }
+
+    /* قبل ما تختاري حاجة (Select status) */
+    .form-panel select:invalid {
+        color: #a68a98 !important;
+    }
+
+    .form-panel select option {
+        color: #ffffff;
+        background: #2b2035;
+    }

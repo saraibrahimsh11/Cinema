@@ -19,5 +19,6 @@
 	<ItemGroup>
 	  <Folder Include="wwwroot\images\Actor\" />
 	  <Folder Include="wwwroot\images\Cinema\" />
+	  <Folder Include="wwwroot\images\Movie\" />
 	</ItemGroup>
 </Project>

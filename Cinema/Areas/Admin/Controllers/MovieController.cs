@@ -17,12 +17,14 @@ namespace Cinema.Areas.Admin.Controllers
         public IActionResult Create()
         {
             var movies = _context.Movies.AsQueryable();
+            movies = movies.Include(m => m.Category).Include(m => m.Cinema);
             return View(movies.AsEnumerable());
         }
         [HttpPost]
-        public IActionResult Create(Movie movie , IFormFile ImageFile)
+        public IActionResult Create(Movie movie, IFormFile ImageFile, List<IFormFile> SubImages)
         {
-            if(ImageFile != null && ImageFile.Length > 0)
+            // Add ImageFile to wwwroot and Database
+            if (ImageFile != null && ImageFile.Length > 0)
             {
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Movie", fileName);
@@ -34,8 +36,32 @@ namespace Cinema.Areas.Admin.Controllers
 
                 movie.MainImg = fileName;
             }
-            _context.Movies.Add(movie);
+            var savedMovie = _context.Movies.Add(movie);
             _context.SaveChanges();
+
+            if(SubImages != null && SubImages.Count > 0)
+            {
+                foreach(var image in SubImages)
+                {
+                    if (image != null && image.Length > 0)
+                    {
+                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Movie", fileName);
+
+                        using (var stream = System.IO.File.Create(filePath))
+                        {
+                            image.CopyTo(stream);
+                        }
+
+                        _context.MovieSubImages.Add(new MovieSubImage()
+                        {
+                            Image = fileName,
+                            MovieId = savedMovie.Entity.Id
+                        });
+                    }
+                }
+                _context.SaveChanges();
+            }
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
@@ -49,7 +75,7 @@ namespace Cinema.Areas.Admin.Controllers
             return View(movie);
         }
         [HttpPost]
-        public IActionResult Update(Movie movie , IFormFile ImageFile)
+        public IActionResult Update(Movie movie, IFormFile ImageFile)
         {
             var movieInDb = _context.Movies.AsNoTracking().FirstOrDefault(b => b.Id == movie.Id);
 
