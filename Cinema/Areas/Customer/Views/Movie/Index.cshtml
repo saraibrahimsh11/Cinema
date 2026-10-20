@@ -23,9 +23,15 @@
             <label for="Status">Status</label>
             <select id="Status" name="Status">
                 <option value="">All</option>
-                <option value="Now Showing" selected="@(Context.Request.Query["Status"] == "Now Showing")">Now Showing</option>
-                <option value="Coming Soon" selected="@(Context.Request.Query["Status"] == "Coming Soon")">Coming Soon</option>
-                <option value="Ended" selected="@(Context.Request.Query["Status"] == "Ended")">Ended</option>
+                <option value="1" selected="@(Context.Request.Query["Status"] == "1")">
+                    Now Showing
+                </option>
+                <option value="2" selected="@(Context.Request.Query["Status"] == "2")">
+                    Coming Soon
+                </option>
+                <option value="3" selected="@(Context.Request.Query["Status"] == "3")">
+                    Ended
+                </option>
             </select>
         </div>
 
@@ -42,6 +48,10 @@
         <div class="filter-field">
             <label for="Actors">Actor</label>
             <input type="text" id="Actors" name="Actors" value="@Context.Request.Query["Actors"]" placeholder="Mona Zaki" />
+        </div>
+
+        <div class="filter-actions">
+            <button type="submit" class="btn">Filter</button>
         </div>
 
     </form> 

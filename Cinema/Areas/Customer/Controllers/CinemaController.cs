@@ -1,5 +1,6 @@
 ﻿using Cinema.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static System.Net.WebRequestMethods;
 
 namespace Cinema.Areas.Customer.Controllers

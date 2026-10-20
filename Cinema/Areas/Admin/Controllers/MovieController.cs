@@ -19,7 +19,6 @@ namespace Cinema.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            //var movies = _context.Movies.AsQueryable().Include(m => m.Category).Include(m => m.Cinema).Include(m => m.Actors);
             var categories = _context.Categories.AsQueryable();
             var cinemas = _context.Cinemas.AsQueryable();
             var actors = _context.Actors.AsQueryable();
@@ -108,8 +107,20 @@ namespace Cinema.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            movieInDb.Name = movie.Name;
+            movieInDb.Description = movie.Description;
+            movieInDb.Price = movie.Price;
+            movieInDb.Status = movie.Status;
+            movieInDb.DateTime = movie.DateTime;
+            movieInDb.Quantity = movie.Quantity;
+            movieInDb.Rate = movie.Rate;
+            movieInDb.CategoryId = movie.CategoryId;
+            movieInDb.CinemaId = movie.CinemaId;
+
             if (ImageFile != null && ImageFile.Length > 0)
             {
+                var oldFileName = movieInDb.MainImg;
+
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Movie", fileName);
 
@@ -118,18 +129,19 @@ namespace Cinema.Areas.Admin.Controllers
                     ImageFile.CopyTo(stream);
                 }
 
-                movie.MainImg = fileName;
 
-                var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Movie", movieInDb.MainImg);
-
-                if (System.IO.File.Exists(oldFilePath))
+                if (oldFileName != null)
                 {
-                    System.IO.File.Delete(oldFilePath);
+                    var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Movie", oldFileName);
+
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
                 }
-            }
-            else
-            {
-                movie.MainImg = movieInDb.MainImg;
+
+                movieInDb.MainImg = fileName;
+
             }
 
             // Update Actor

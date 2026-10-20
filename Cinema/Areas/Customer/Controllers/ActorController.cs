@@ -1,5 +1,6 @@
 ﻿using Cinema.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static System.Net.WebRequestMethods;
 
 namespace Cinema.Areas.Customer.Controllers
@@ -10,7 +11,7 @@ namespace Cinema.Areas.Customer.Controllers
         private readonly ApplicationDbContext _context = new ApplicationDbContext();
         public IActionResult Index(string Name , int page = 1)
         {
-            var actors = _context.Actors.AsQueryable();
+            var actors = _context.Actors.Include(m => m.Movies).AsQueryable();
 
             // filter 
             if(Name != null)

@@ -15,12 +15,15 @@ namespace Cinema.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var categories = _context.Categories.AsQueryable();
-            return View(categories.AsEnumerable());
+            return View(new Category());
         }
         [HttpPost]
         public IActionResult Create(Category category)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(category);
+            }
             _context.Categories.Add(category);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
@@ -38,6 +41,10 @@ namespace Cinema.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Update(Category category)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(category);
+            }
             _context.Categories.Update(category);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
