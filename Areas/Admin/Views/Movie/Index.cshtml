@@ -1,0 +1,98 @@
+﻿@model List<Movie>
+<header class="page-head">
+    <div>
+        <h1>Movies</h1>
+        <p class="subtitle">Group movies by genre</p>
+    </div>
+    <a class="btn" href="/Admin/Movie/Create">Add movie</a>
+</header>
+
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Movie</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>DateTime</th>
+                <th>Quantity</th>
+                <th>Rate</th>
+                <th>Category</th>
+                <th>Cinema</th>
+                <th>Actors</th>
+                <th>Description</th>
+                <th class="actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>
+                        @if(item.Status == 1)
+                        {
+                            <span>Now Showing</span>
+                        }
+                        else if(item.Status == 2)
+                        {
+                            <span>Coming Soon</span>
+                        }
+                        else
+                        {
+                            <span>Ended</span>
+                        }
+                    </td>
+                    <td>@item.DateTime</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Rate</td>
+                    <td>@item.Category.Name</td>
+                    <td>@item.Cinema.Name</td>
+                    <td>
+                        @for (int i = 0;i < item.Actors.Count(); i++)
+                        {
+                            <span>@item.Actors[i].Name </span>
+                        }
+                    </td>
+                    <td>@item.Description</td>
+
+                    <td class="actions">
+                        <div class="actions-group">
+                            <a class="row-btn update" href="/Admin/Movie/Update/@item.Id">Update</a>
+                            <a class="row-btn delete delete-confirm" href="/Admin/Movie/Delete/@item.Id">Delete</a>                        
+                        </div>
+                    </td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.querySelectorAll('.delete-confirm').forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const url = this.href;
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "Cancel"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,746 @@
+/*------------------Actors (Customer)--------------------------*/
+
+.actor-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+    margin-top: 36px;
+}
+
+.actor-card {
+    display: flex;
+    flex-direction: column;
+    background: #231a2b;
+    border: 1px solid #322840;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+
+    .actor-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--gold);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, .45);
+    }
+
+.actor-photo {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #3a2d48;
+}
+
+    .actor-photo img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+    }
+
+.actor-body {
+    padding: 16px 18px 20px;
+}
+
+.actor-name {
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.actor-meta {
+    margin-top: 4px;
+    font: 400 18px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 1px;
+    color: var(--gold);
+}
+
+.actor-desc {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.movie-poster {
+    position: relative;
+    overflow: hidden;
+}
+
+    .movie-poster img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.actor-photo {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background: #3a2d48;
+}
+
+    .actor-photo img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+    }
+
+/*------------------Actors page banner--------------------------*/
+
+.page-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 28px 32px;
+    background: #2a0f1d;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gold);
+    border-radius: 18px;
+}
+
+.hero-tag {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 4px 14px;
+    font: 700 12px "DM Sans", sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #2a1c05;
+    background: var(--gold);
+    border-radius: 999px;
+}
+
+.page-hero h1 {
+    font-size: 52px;
+}
+
+.hero-count {
+    text-align: center;
+}
+
+    .hero-count strong {
+        display: block;
+        font: 400 64px "Bebas Neue", Impact, sans-serif;
+        line-height: 1;
+        color: var(--gold);
+    }
+
+    .hero-count span {
+        font-size: 13px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--muted);
+    }
+
+@media (max-width: 640px) {
+    .page-hero {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/*------------------Filter bar--------------------------*/
+
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px 20px;
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: #231a2b;
+    border: 1px solid #322840;
+    border-radius: 18px;
+}
+
+.filter-field {
+    min-width: 160px;
+}
+
+.filter-search {
+    flex: 1;
+    min-width: 220px;
+}
+
+.filter-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #c9b3bf;
+}
+
+.filter-field input,
+.filter-field select {
+    display: block;
+    width: 100%;
+    padding: 11px 14px;
+    font: 400 16px "DM Sans", sans-serif;
+    color: #ffffff;
+    background: #3a2d48;
+    border: 1px solid #4a3a5c;
+    border-radius: 12px;
+    outline: none;
+}
+
+    .filter-field input::placeholder {
+        color: #a68a98;
+    }
+
+    .filter-field input:focus,
+    .filter-field select:focus {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 3px rgba(232, 176, 48, .15);
+    }
+
+.filter-bar .btn {
+    margin-left: 0;
+}
+
+.filter-bar .btn-cancel {
+    padding-bottom: 12px;
+}
+
+.actor-photo {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    background: #3a2d48;
+}
+
+/*------------------Cinemas (Customer)--------------------------*/
+
+.cinema-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 28px;
+    margin-top: 36px;
+}
+
+.cinema-card {
+    display: flex;
+    flex-direction: column;
+    background: #231a2b;
+    border: 1px solid #322840;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+
+    .cinema-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--gold);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, .45);
+    }
+
+.cinema-photo {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #3a2d48;
+}
+
+    .cinema-photo img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+    }
+
+.cinema-body {
+    padding: 16px 18px 20px;
+}
+
+.cinema-name {
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--gold);
+}
+
+.cinema-meta {
+    margin-top: 4px;
+    font: 400 18px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 1px;
+    color: var(--gold);
+}
+
+.cinema-desc {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/*------------------Movies (Customer)--------------------------*/
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 28px;
+    margin-top: 28px;
+}
+
+.movie-card {
+    display: flex;
+    flex-direction: column;
+    background: #231a2b;
+    border: 1px solid #322840;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+
+    .movie-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--gold);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, .45);
+    }
+
+.movie-poster {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background: #3a2d48;
+}
+
+    .movie-poster img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+    }
+
+.movie-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(21, 12, 19, .75);
+    color: var(--gold);
+    font: 700 16px "DM Sans", sans-serif;
+    opacity: 0;
+    transition: opacity .2s;
+}
+
+.movie-poster:hover .movie-overlay,
+.movie-poster:focus-visible .movie-overlay {
+    opacity: 1;
+}
+
+.movie-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 14px 14px;
+}
+
+.movie-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.movie-meta {
+    margin-top: 2px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.movie-desc {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.movie-price {
+    margin-top: auto;
+    padding-top: 10px;
+    font: 400 22px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 1px;
+    color: var(--gold);
+}
+
+/*------------------Pagination--------------------------*/
+
+.pager {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: 44px;
+}
+
+    .pager .pagination {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+        .pager .pagination .page-item .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-width: 44px;
+            height: 44px;
+            margin: 0;
+            padding: 0 14px;
+            font: 500 16px "DM Sans", sans-serif;
+            color: var(--link);
+            background: #231a2b;
+            border: 1px solid #322840;
+            border-radius: 10px !important;
+            text-decoration: none;
+            transition: color .15s, border-color .15s, background .15s, transform .15s;
+        }
+
+            .pager .pagination .page-item .page-link:hover {
+                color: var(--gold);
+                border-color: var(--gold);
+                transform: translateY(-2px);
+            }
+
+            .pager .pagination .page-item .page-link:focus-visible {
+                outline: 2px solid var(--gold);
+                outline-offset: 2px;
+                box-shadow: none;
+            }
+
+        .pager .pagination .page-item.active .page-link {
+            color: #2a1c05;
+            font-weight: 700;
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .pager .pagination .page-item.disabled .page-link {
+            opacity: .35;
+            pointer-events: none;
+        }
+
+        .pager .pagination .page-item:first-child .page-link,
+        .pager .pagination .page-item:last-child .page-link {
+            padding: 0 20px;
+            font-weight: 700;
+            letter-spacing: .5px;
+        }
+
+.pager-info {
+    margin: 0;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--muted);
+}
+
+@media (max-width: 520px) {
+    .pager .pagination .page-item .page-link {
+        min-width: 38px;
+        height: 38px;
+        padding: 0 10px;
+    }
+}
+
+/*-----------------Filter Movie--------------------------*/
+.filter-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 16px 18px;
+}
+
+    .filter-grid .filter-field {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .filter-grid .filter-search {
+        flex: 1.6;
+    }
+
+    .filter-grid .filter-field label {
+        margin-bottom: 6px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .filter-grid .filter-field input,
+    .filter-grid .filter-field select {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+.filter-actions {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 10px;
+}
+
+    .filter-actions .btn {
+        padding: 11px 20px;
+        font-size: 15px;
+    }
+
+.filter-field input[type="date"] {
+    color-scheme: dark;
+}
+
+@media (max-width: 1100px) {
+    .filter-grid {
+        flex-wrap: wrap;
+    }
+
+        .filter-grid .filter-field,
+        .filter-grid .filter-search {
+            flex: 1 1 180px;
+        }
+
+    .filter-actions {
+        flex: 1 1 100%;
+        padding-bottom: 0;
+    }
+}
+
+/*------------------Movie row (4 side by side)--------------------------*/
+
+.rail {
+    margin-top: 40px;
+}
+
+.rail-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.rail-heading {
+    font: 400 36px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 1px;
+    line-height: 1;
+    color: var(--text);
+}
+
+.rail-sub {
+    margin-top: 6px;
+    font-size: 15px;
+    color: var(--muted);
+}
+
+.rail-link {
+    font: 700 14px "DM Sans", sans-serif;
+    color: var(--gold);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color .15s;
+}
+
+    .rail-link:hover {
+        color: #f5c451;
+    }
+
+.rail-track {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 24px;
+    margin-top: 22px;
+}
+
+.rail-card {
+    flex: 0 0 252px;
+    min-width: 0;
+    background: #231a2b;
+    border: 1px solid #322840;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+
+    .rail-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--gold);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, .45);
+    }
+
+.rail-poster {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    height: 300px;
+    padding: 14px;
+    overflow: hidden;
+    background: #3a2d48;
+    text-decoration: none;
+}
+
+    .rail-poster img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+    }
+
+    .rail-poster::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(21, 12, 19, 0) 45%, rgba(21, 12, 19, .85) 100%);
+    }
+
+.rail-poster-title {
+    position: relative;
+    z-index: 1;
+    font: 400 26px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, .6);
+}
+
+.rail-rate {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+    padding: 4px 10px;
+    font: 700 13px "DM Sans", sans-serif;
+    color: var(--gold);
+    background: rgba(21, 12, 19, .78);
+    border: 1px solid rgba(232, 176, 48, .45);
+    border-radius: 999px;
+}
+
+.rail-body {
+    padding: 14px 16px 16px;
+}
+
+.rail-card .rail-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--gold) !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rail-meta {
+    margin-top: 2px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.rail-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.rail-price {
+    font: 400 22px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 1px;
+    color: var(--gold);
+}
+
+.rail-book {
+    padding: 8px 18px;
+    font: 700 14px "DM Sans", sans-serif;
+    color: #2a1c05;
+    background: var(--gold);
+    border-radius: 9px;
+    text-decoration: none;
+    transition: background .15s;
+}
+
+    .rail-book:hover {
+        background: #f5c451;
+    }
+
+@media (max-width: 1000px) {
+    .rail-track {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .rail-track {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*------------------Categories (Customer)--------------------------*/
+/* Scoped to .category-grid so the Actors / Cinemas pages are not affected. */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 28px;
+    margin-top: 36px;
+}
+
+    /* name + description only: hide the empty photo area */
+    .category-grid .actor-photo {
+        display: none;
+    }
+
+    .category-grid .actor-body {
+        padding: 22px 20px;
+    }
+
+    .category-grid .actor-name {
+        color: var(--gold);
+    }

@@ -1,0 +1,100 @@
+﻿@model List<Movie>
+<div>
+
+    <header class="page-hero">
+        <div>
+            <span class="hero-tag">Movies</span>
+            <h1>Now Showing</h1>
+            <p class="subtitle">Pick a movie and book your seat</p>
+        </div>
+        <div class="hero-count">
+            <strong>@Model.Count</strong>
+            <span>movies</span>
+        </div>
+    </header>
+
+    <form method="get" class="filter-bar filter-grid">
+        <div class="filter-field filter-search">
+            <label for="Name">Name</label>
+            <input type="text" id="Name" name="Name" value="@Context.Request.Query["Name"]" placeholder="Inception" />
+        </div>
+
+        <div class="filter-field">
+            <label for="Status">Status</label>
+            <select id="Status" name="Status">
+                <option value="">All</option>
+                <option value="1" selected="@(Context.Request.Query["Status"] == "1")">
+                    Now Showing
+                </option>
+                <option value="2" selected="@(Context.Request.Query["Status"] == "2")">
+                    Coming Soon
+                </option>
+                <option value="3" selected="@(Context.Request.Query["Status"] == "3")">
+                    Ended
+                </option>
+            </select>
+        </div>
+
+        <div class="filter-field">
+            <label for="Price">Max price</label>
+            <input type="number" id="Price" name="Price" min="0" step="any" value="@Context.Request.Query["Price"]" placeholder="150" />
+        </div>
+
+        <div class="filter-field">
+            <label for="Rate">Min rate</label>
+            <input type="number" id="Rate" name="Rate" min="0" max="5" step="0.1" value="@Context.Request.Query["Rate"]" placeholder="4" />
+        </div>
+
+        <div class="filter-field">
+            <label for="Actors">Actor</label>
+            <input type="text" id="Actors" name="Actors" value="@Context.Request.Query["Actors"]" placeholder="Mona Zaki" />
+        </div>
+
+        <div class="filter-actions">
+            <button type="submit" class="btn">Filter</button>
+        </div>
+
+    </form> 
+
+    <div class="rail-track">
+        @foreach (var item in Model)
+        {
+            <article class="rail-card">
+                <a href="#" class="rail-poster">
+                    <img src="/images/Movie/@item.MainImg" alt="@item.Name" />
+                    <span class="rail-rate">&#9733; @item.Rate</span>
+                    <span class="rail-poster-title">@item.Name</span>
+                </a>
+                <div class="rail-body">
+                    <h3 class="rail-title">@item.Name</h3>
+                    <p class="rail-meta">@item.Category.Name · @item.Cinema.Name</p>
+                    <div class="rail-foot">
+                        <span class="rail-price">@item.Price EGP</span>
+                        <a class="rail-book" href="#">Book</a>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+    
+    <nav aria-label="Page navigation" class="pager">
+        <ul class="pagination">
+            <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="/Customer/Movie/Index?page=@(ViewBag.CurrentPage - 1)&Name=@Context.Request.Query["Name"]" aria-label="Previous">
+                    <span aria-hidden="true">&larr;</span> Prev
+                </a>
+            </li>
+            @for (var i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" href="/Customer/Movie/Index?page=@i&Name=@Context.Request.Query["Name"]">@i</a>
+                </li>
+            }
+            <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="/Customer/Movie/Index?page=@(ViewBag.CurrentPage + 1)&Name=@Context.Request.Query["Name"]" aria-label="Next">
+                    Next <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+        </ul>
+        <p class="pager-info">Page @ViewBag.CurrentPage of @ViewBag.TotalPages</p>
+    </nav>

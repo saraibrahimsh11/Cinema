@@ -1,0 +1,164 @@
+﻿@using Cinema.ViewModel
+@model MovieVM
+<div class="container">
+
+    <header class="page-head">
+        <div>
+            <h1>Update movie</h1>
+            <p class="subtitle">Group movies by genre</p>
+        </div>
+    </header>
+
+    <form method="post" class="form-panel" enctype="multipart/form-data">
+        <input name="Id" value="@Model.Movie.Id" hidden/>
+
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input class="form-control" id="Name" name="Name" value="@Model.Movie.Name" />
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Status">Status</label>
+            <select class="form-control" id="Status" name="Status">
+                <option value="" disabled selected hidden>-- Select status --</option>
+                <option value="1" selected="@(Model.Movie.Status == 1)">Now Showing</option>
+                <option value="2" selected="@(Model.Movie.Status == 2)">Coming Soon</option>
+                <option value="3" selected="@(Model.Movie.Status == 3)">Ended</option>
+            </select>
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="MainImg" class="form-label">MainImg</label>
+            <input name="ImageFile" type="file" class="form-control" accept="image/*" onchange="previewImage(event)">
+        </div>
+
+        <div class="mb-3">
+            <img id="preview"
+                 src="~/images/Movie/@Model.Movie.MainImg"
+                 alt="Current Image"
+                 style="max-width: 200px; border:1px solid #ccc; padding:5px; border-radius:10px;" />
+        </div>
+
+        <div class="form-group">
+            <label for="SubImages" class="form-label">SubImages</label>
+            <input name="SubImages" type="file" class="form-control" accept="image/*" multiple>
+        </div>
+
+        <div class="mb-3">
+            @foreach(var item in Model.MovieSubImages)
+            {
+                <img id="preview"
+                        src="~/images/Movie/@item.Image"
+                        alt="Current Image"
+                        style="max-width: 200px; border:1px solid #ccc; padding:5px; border-radius:10px;" />
+            }
+                
+        </div>
+
+        <div class="form-group">
+            <label for="Price">Price</label>
+            <input class="form-control" id="Price" name="Price" type="number" value="@Model.Movie.Price" />
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="DateTime">DateTime</label>
+            <input class="form-control" id="DateTime" name="DateTime" type="datetime-local" value="@Model.Movie.DateTime.ToString("yyyy-MM-ddTHH:mm")" />
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Quantity">Rate</label>
+            <input class="form-control" id="Rate" name="Rate" type="number" value="@Model.Movie.Rate" />
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Quantity">Quantity</label>
+            <input class="form-control" id="Quantity" name="Quantity" type="number" value="@Model.Movie.Quantity" />
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="CategoryId">Category Name</label>
+            <select class="form-control" id="CategoryId" name="CategoryId" >
+
+                @foreach (var item in Model.Categories)
+                {
+                    @if(item.Id == Model.Movie.CategoryId)
+                    {
+                        <option value="@item.Id" selected>@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                }
+            </select>
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="CinemaId">Cinema Name</label>
+            <select class="form-control" id="CinemaId" name="CinemaId">
+                @foreach (var item in Model.Cinemas)
+                {
+                    @if (item.Id == Model.Movie.CinemaId)
+                    {
+                        <option value="@item.Id" selected>@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                }
+            </select>
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <span class="field-label">Actors</span>
+            <div class="chips">
+                @foreach (var item in Model.Actors)
+                {
+                   <label class="chip">
+                        <input type="checkbox" name="ActorIds" value="@item.Id" checked="@Model.Movie.Actors?.Any(a=>a.Id == item.Id)"/>
+                        <span class="chip-box">@item.Name</span>
+                    </label>
+                }
+            </div>
+            <span class="field-error"></span>
+        </div>
+        
+        
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <textarea class="form-control" id="Description" name="Description">@Model.Movie.Description</textarea>
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-bar">
+            <button type="submit" class="btn">Update movie</button>
+            <a class="btn-cancel" href="/Admin/Movie/Index">Cancel</a>
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById("preview");
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result; // الصورة الجديدة
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

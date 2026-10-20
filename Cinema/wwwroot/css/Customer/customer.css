@@ -721,3 +721,26 @@
         grid-template-columns: 1fr;
     }
 }
+
+/*------------------Categories (Customer)--------------------------*/
+/* Scoped to .category-grid so the Actors / Cinemas pages are not affected. */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 28px;
+    margin-top: 36px;
+}
+
+    /* name + description only: hide the empty photo area */
+    .category-grid .actor-photo {
+        display: none;
+    }
+
+    .category-grid .actor-body {
+        padding: 22px 20px;
+    }
+
+    .category-grid .actor-name {
+        color: var(--gold);
+    }

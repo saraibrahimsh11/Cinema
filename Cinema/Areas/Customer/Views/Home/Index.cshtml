@@ -1,90 +1,83 @@
-﻿@{
+﻿@using Cinema.ViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
+@model HomeVM
+<header class="page-hero">
+    <div>
+        <span class="hero-tag">Welcome</span>
+        <h1>Cinima</h1>
+        <p class="subtitle">Pick a movie and book your seat</p>
+    </div>
+</header>
 
-<div class="container">
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:16px; margin-top:20px;">
+    <div class="hero-count" style="padding:18px; background:#231a2b; border:1px solid #322840; border-radius:14px;">
+        <strong>@Model.MoviesCount</strong>
+        <span>movies</span>
+    </div>
+    <div class="hero-count" style="padding:18px; background:#231a2b; border:1px solid #322840; border-radius:14px;">
+        <strong>@Model.ActorsCount</strong>
+        <span>actors</span>
+    </div>
+    <div class="hero-count" style="padding:18px; background:#231a2b; border:1px solid #322840; border-radius:14px;">
+        <strong>@Model.CategoriesCount</strong>
+        <span>categories</span>
+    </div>
+    <div class="hero-count" style="padding:18px; background:#231a2b; border:1px solid #322840; border-radius:14px;">
+        <strong>@Model.CinemasCount</strong>
+        <span>cinemas</span>
+    </div>
+</div>
 
-    <header class="page-head">
-        <div>
-            <h1>Now Showing</h1>
-            <p class="subtitle">Pick a movie and book your seat</p>
-        </div>
-    </header>
-
-    <div class="movie-grid">
-
-        <article class="movie-card">
-            <a href="#" class="movie-poster">
-                <img src="/images/movies/inception.jpg" alt="Inception" />
-                <span class="movie-overlay">View details</span>
-            </a>
-            <div class="movie-info">
-                <h3 class="movie-title">Inception</h3>
-                <p class="movie-meta">Sci-Fi</p>
-                <p class="movie-price">120 EGP</p>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <a href="#" class="movie-poster">
-                <img src="/images/movies/dark-knight.jpg" alt="The Dark Knight" />
-                <span class="movie-overlay">View details</span>
-            </a>
-            <div class="movie-info">
-                <h3 class="movie-title">The Dark Knight</h3>
-                <p class="movie-meta">Action</p>
-                <p class="movie-price">130 EGP</p>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <a href="#" class="movie-poster">
-                <img src="/images/movies/interstellar.jpg" alt="Interstellar" />
-                <span class="movie-overlay">View details</span>
-            </a>
-            <div class="movie-info">
-                <h3 class="movie-title">Interstellar</h3>
-                <p class="movie-meta">Sci-Fi</p>
-                <p class="movie-price">140 EGP</p>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <a href="#" class="movie-poster">
-                <img src="/images/movies/joker.jpg" alt="Joker" />
-                <span class="movie-overlay">View details</span>
-            </a>
-            <div class="movie-info">
-                <h3 class="movie-title">Joker</h3>
-                <p class="movie-meta">Drama</p>
-                <p class="movie-price">110 EGP</p>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <a href="#" class="movie-poster">
-                <span class="poster-placeholder">Coco</span>
-                <span class="movie-overlay">View details</span>
-            </a>
-            <div class="movie-info">
-                <h3 class="movie-title">Coco</h3>
-                <p class="movie-meta">Family</p>
-                <p class="movie-price">90 EGP</p>
-            </div>
-        </article>
-
-        <article class="movie-card">
-            <a href="#" class="movie-poster">
-                <span class="poster-placeholder">The Conjuring</span>
-                <span class="movie-overlay">View details</span>
-            </a>
-            <div class="movie-info">
-                <h3 class="movie-title">The Conjuring</h3>
-                <p class="movie-meta">Horror</p>
-                <p class="movie-price">100 EGP</p>
-            </div>
-        </article>
-
+<section class="rail">
+    <div class="rail-head">
+        <h2 class="rail-heading">Now Showing</h2>
+        <a class="rail-link" href="/Customer/Movie/Index?Status=1">View all &rarr;</a>
     </div>
 
-</div>
+    <div class="rail-track">
+        @foreach (var item in Model.NowShowing)
+        {
+            <article class="rail-card">
+                <a href="/Customer/Movie/Index?Name=@Uri.EscapeDataString(item.Name)" class="rail-poster">
+                    <img src="/images/Movie/@item.MainImg" alt="@item.Name" />
+                    <span class="rail-rate">&#9733; @item.Rate</span>
+                    <span class="rail-poster-title">@item.Name</span>
+                </a>
+                <div class="rail-body">
+                    <h3 class="rail-title">@item.Name</h3>
+                    <p class="rail-meta">@item.Category.Name · @item.Cinema.Name</p>
+                    <div class="rail-foot">
+                        <span class="rail-price">@item.Price.ToString("0.##") EGP</span>
+                        <a class="rail-book" href="#">Book</a>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="rail">
+    <div class="rail-head">
+        <h2 class="rail-heading">Coming Soon</h2>
+        <a class="rail-link" href="/Customer/Movie/Index?Status=2">View all &rarr;</a>
+    </div>
+
+    <div class="rail-track">
+        @foreach (var item in Model.ComingSoon)
+        {
+            <article class="rail-card">
+                <a href="/Customer/Movie/Index?Name=@Uri.EscapeDataString(item.Name)" class="rail-poster">
+                    <img src="/images/Movie/@item.MainImg" alt="@item.Name" />
+                    <span class="rail-rate">@item.DateTime.ToString("dd MMM yyyy")</span>
+                    <span class="rail-poster-title">@item.Name</span>
+                </a>
+                <div class="rail-body">
+                    <h3 class="rail-title">@item.Name</h3>
+                    <p class="rail-meta">@item.Category.Name · @item.Cinema.Name</p>
+                </div>
+            </article>
+        }
+    </div>
+</section>
