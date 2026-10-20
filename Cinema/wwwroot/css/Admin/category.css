@@ -283,3 +283,204 @@
         color: #ffffff;
         background: #2b2035;
     }
+
+/*------------------Actors chips--------------------------*/
+
+.field-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #c9b3bf;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.form-panel .chip {
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+}
+
+    .form-panel .chip input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: 0;
+        padding: 0;
+        opacity: 0;
+    }
+
+.chip-box {
+    display: inline-block;
+    padding: 9px 18px;
+    font: 500 15px "DM Sans", sans-serif;
+    color: #d9bfca;
+    background: #3a2d48;
+    border: 1px solid #4a3a5c;
+    border-radius: 999px;
+    transition: color .15s, background .15s, border-color .15s;
+}
+
+.chip:hover .chip-box {
+    border-color: #594363;
+}
+
+.chip input:checked + .chip-box {
+    color: #2a1c05;
+    font-weight: 700;
+    background: var(--gold);
+    border-color: var(--gold);
+}
+
+.chip input:focus-visible + .chip-box {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+/*------------------Table (compact)--------------------------*/
+
+.table-wrap {
+    margin-top: 24px;
+    background: #231a2b;
+    border: 1px solid #322840;
+    border-radius: 18px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th {
+    padding: 12px 8px;
+    font: 400 17px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 1px;
+    color: var(--gold);
+    text-align: left;
+    white-space: nowrap;
+    background: #2b2035;
+    border-bottom: 1px solid #30263a;
+}
+
+td {
+    padding: 10px 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #d9bfca;
+    vertical-align: middle;
+    border-bottom: 1px solid #30263a;
+}
+
+    th:first-child,
+    td:first-child {
+        padding-left: 16px;
+    }
+
+    th:last-child,
+    td:last-child {
+        padding-right: 16px;
+    }
+
+tr:last-child td {
+    border-bottom: 0;
+}
+
+tbody tr:hover td {
+    background: rgba(255, 255, 255, .03);
+}
+
+/* الأعمدة */
+td:nth-child(1) {
+    color: var(--muted);
+}
+
+td:nth-child(2) {
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+td:nth-child(3) {
+    font-weight: 700;
+    color: var(--gold);
+    white-space: nowrap;
+}
+
+td:nth-child(5) {
+    min-width: 90px;
+    color: var(--muted);
+}
+
+/* الممثلين: كل اسم في كبسولة صغيرة (من غير تغيير في الـ HTML) */
+td:nth-child(10) span {
+    display: inline-block;
+    margin: 2px 4px 2px 0;
+    padding: 2px 9px;
+    font-size: 12px;
+    white-space: nowrap;
+    background: #3a2d48;
+    border-radius: 999px;
+}
+
+/* الوصف: سطر واحد وبعده نقط */
+td:nth-child(11) {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--muted);
+}
+
+/* الأزرار */
+th.actions,
+td.actions {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.actions-group {
+    display: inline-flex;
+    gap: 6px;
+}
+
+.row-btn {
+    padding: 6px 12px;
+    font: 500 12px "DM Sans", sans-serif;
+    background: transparent;
+    border-radius: 7px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .15s, color .15s;
+}
+
+    .row-btn:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 2px;
+    }
+
+    .row-btn.update {
+        color: var(--gold);
+        border: 1px solid var(--gold);
+    }
+
+        .row-btn.update:hover {
+            background: var(--gold);
+            color: #2a1c05;
+        }
+
+    .row-btn.delete {
+        color: var(--red);
+        border: 1px solid var(--red);
+    }
+
+        .row-btn.delete:hover {
+            background: var(--red);
+            color: #fff;
+        }
+

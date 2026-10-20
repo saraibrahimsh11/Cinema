@@ -8,7 +8,7 @@ namespace Cinema.Models
         public string Name { get; set; }
         public string? Description { get; set; }
         public decimal Price { get; set; }
-        public bool Status { get; set; }
+        public int Status { get; set; }
         public string MainImg { get; set; }
         public DateTime DateTime { get; set; }
         public int Quantity { get; set; }

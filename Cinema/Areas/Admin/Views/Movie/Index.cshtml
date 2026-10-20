@@ -12,7 +12,15 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Movie Name</th>
+                <th>Movie</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>DateTime</th>
+                <th>Quantity</th>
+                <th>Rate</th>
+                <th>Category</th>
+                <th>Cinema</th>
+                <th>Actors</th>
                 <th>Description</th>
                 <th class="actions">Actions</th>
             </tr>
@@ -23,7 +31,34 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>
+                        @if(item.Status == 1)
+                        {
+                            <span>Now Showing</span>
+                        }
+                        else if(item.Status == 2)
+                        {
+                            <span>Coming Soon</span>
+                        }
+                        else
+                        {
+                            <span>Ended</span>
+                        }
+                    </td>
+                    <td>@item.DateTime</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Rate</td>
+                    <td>@item.Category.Name</td>
+                    <td>@item.Cinema.Name</td>
+                    <td>
+                        @for (int i = 0;i < item.Actors.Count(); i++)
+                        {
+                            <span>@item.Actors[i].Name </span>
+                        }
+                    </td>
                     <td>@item.Description</td>
+
                     <td class="actions">
                         <div class="actions-group">
                             <a class="row-btn update" href="/Admin/Movie/Update/@item.Id">Update</a>

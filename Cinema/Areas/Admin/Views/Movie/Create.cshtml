@@ -1,4 +1,5 @@
-﻿@Model MovieVM
+﻿@using Cinema.ViewModel
+@model MovieVM
 <div class="container">
 
     <header class="page-head">
@@ -12,7 +13,7 @@
 
         <div class="form-group">
             <label for="Name">Name</label>
-            <input class="form-control" id="Name" name="Name" placeholder="e.g. Mona Zaki" autofocus />
+            <input class="form-control" id="Name" name="Name" autofocus />
             <span class="field-error"></span>
         </div>
 
@@ -20,9 +21,9 @@
             <label for="Status">Status</label>
             <select class="form-control" id="Status" name="Status">
                 <option value="" disabled selected hidden>-- Select status --</option>
-                <option value="NowShowing">Now Showing</option>
-                <option value="ComingSoon">Coming Soon</option>
-                <option value="Ended">Ended</option>
+                <option value="1">Now Showing</option>
+                <option value="2">Coming Soon</option>
+                <option value="3">Ended</option>
             </select>
             <span class="field-error"></span>
         </div>
@@ -62,8 +63,9 @@
         </div>
 
         <div class="form-group">
-            <label for="Status">Status</label>
-            <select class="form-control" id="Status" name="CategoryId">
+            <label for="CategoryId">Category Name</label>
+            <select class="form-control" id="CategoryId" name="CategoryId">
+
                 @foreach(var item in Model.Categories)
                 {
                     <option value="@item.Id">@item.Name</option>
@@ -73,12 +75,27 @@
         </div>
 
         <div class="form-group">
-            <label for="Status">Status</label>
-            <select class="form-control" id="Status" name="Status">
-                <option value="" disabled selected hidden>-- Select status --</option>
-                <option value="ComingSoon">Coming Soon</option>
-                <option value="Ended">Ended</option>
+            <label for="CinemaId">Cinema Name</label>
+            <select class="form-control" id="CinemaId" name="CinemaId">
+                @foreach (var item in Model.Cinemas)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
             </select>
+            <span class="field-error"></span>
+        </div>
+
+        <div class="form-group">
+            <span class="field-label">Actors</span>
+            <div class="chips">
+                @foreach (var item in Model.Actors)
+                {
+                    <label class="chip">
+                        <input type="checkbox" name="ActorIds" value="@item.Id" />
+                        <span class="chip-box">@item.Name</span>
+                    </label>
+                }
+            </div>
             <span class="field-error"></span>
         </div>
 
