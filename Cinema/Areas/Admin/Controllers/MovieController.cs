@@ -1,5 +1,6 @@
 ﻿using Cinema.Data;
 using Cinema.Models;
+using Cinema.Repositories;
 using Cinema.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,19 +10,39 @@ namespace Cinema.Areas.Admin.Controllers
     [Area("Admin")]
     public class MovieController : Controller
     {
-        private readonly ApplicationDbContext _context = new ApplicationDbContext();
-        public IActionResult Index()
+        //private readonly ApplicationDbContext _context = new ApplicationDbContext();
+        private readonly IRepositry<Movie> _movieRepositry;// = new Repositry<Movie>();
+        private readonly IRepositry<Category> _categoryRepositry;// = new Repositry<Category>();
+        private readonly IRepositry<Models.Cinema> _cinemaRepositry;// = new Repositry<Models.Cinema>();
+        private readonly IRepositry<Actor> _actorRepositry;// = new Repositry<Actor>();
+        private readonly IMovieSubImageRepositry _movieSubImageRepositry;// = new MovieSubImageRepositry();
+
+        public MovieController(IRepositry<Movie> movieRepositry, IRepositry<Category> categoryRepositry, IRepositry<Models.Cinema> cinemaRepositry, IRepositry<Actor> actorRepositry, IMovieSubImageRepositry movieSubImageRepositry)
         {
-            var movies = _context.Movies.AsQueryable()
-                .Include(c => c.Cinema).Include(c => c.Category).Include(a => a.Actors);
+            _movieRepositry = movieRepositry;
+            _categoryRepositry = categoryRepositry;
+            _cinemaRepositry = cinemaRepositry;
+            _actorRepositry = actorRepositry;
+            _movieSubImageRepositry = movieSubImageRepositry;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            //var movies = _context.Movies.AsQueryable()
+            //    .Include(c => c.Cinema).Include(c => c.Category).Include(a => a.Actors);
+
+            var movies = await _movieRepositry.GetListAsync(includes: [c => c.Cinema, c => c.Category, a => a.Actors]);
             return View(movies.ToList());
         }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var categories = _context.Categories.AsQueryable();
-            var cinemas = _context.Cinemas.AsQueryable();
-            var actors = _context.Actors.AsQueryable();
+            //var categories = _context.Categories.AsQueryable();
+            var categories = await _categoryRepositry.GetListAsync();
+            //var cinemas = _context.Cinemas.AsQueryable();
+            var cinemas = await _cinemaRepositry.GetListAsync();
+            //var actors = _context.Actors.AsQueryable();
+            var actors = await _actorRepositry.GetListAsync();
 
             return View(new MovieVM()
             {
@@ -31,7 +52,7 @@ namespace Cinema.Areas.Admin.Controllers
             });
         }
         [HttpPost]
-        public IActionResult Create(Movie movie, IFormFile ImageFile, List<IFormFile> SubImages , List<int> ActorIds)
+        public async Task<IActionResult> Create(Movie movie, IFormFile ImageFile, List<IFormFile> SubImages , List<int> ActorIds)
         {
             // Add ImageFile to wwwroot and Database
             if (ImageFile != null && ImageFile.Length > 0)
@@ -47,9 +68,12 @@ namespace Cinema.Areas.Admin.Controllers
                 movie.MainImg = fileName;
             }
             // Add Actor to Movie in datebase
-            movie.Actors = _context.Actors.Where(a => ActorIds.Contains(a.Id)).ToList();
-            var savedMovie = _context.Movies.Add(movie);
-            _context.SaveChanges();
+            //movie.Actors = _context.Actors.Where(a => ActorIds.Contains(a.Id)).ToList();
+            movie.Actors = (await _actorRepositry.GetListAsync(a => ActorIds.Contains(a.Id))).ToList();
+            //var savedMovie = _context.Movies.Add(movie);
+            var savedMovie = await _movieRepositry.AddAsync(movie);
+            //_context.SaveChanges();
+            await _movieRepositry.CommitAsync();
 
             if(SubImages != null && SubImages.Count > 0)
             {
@@ -65,28 +89,39 @@ namespace Cinema.Areas.Admin.Controllers
                             image.CopyTo(stream);
                         }
 
-                        _context.MovieSubImages.Add(new MovieSubImage()
+                        //_context.MovieSubImages.Add(new MovieSubImage()
+                        //{
+                        //    Image = fileName,
+                        //    MovieId = savedMovie.Entity.Id
+                        //});
+
+                        await _movieSubImageRepositry.AddAsync(new MovieSubImage()
                         {
                             Image = fileName,
                             MovieId = savedMovie.Entity.Id
                         });
                     }
                 }
-                _context.SaveChanges();
+                //_context.SaveChanges();
+                await _movieSubImageRepositry.CommitAsync();
             }
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var movie = _context.Movies.Include(m => m.Actors).FirstOrDefault(c => c.Id == id);
+            //var movie = _context.Movies.Include(m => m.Actors).FirstOrDefault(c => c.Id == id);
+            var movie = await _movieRepositry.GetOneAsync(c => c.Id == id, includes: [m => m.Actors]);
             if (movie == null)
             {
                 return NotFound();
             }
-            var categories = _context.Categories.AsQueryable();
-            var cinemas = _context.Cinemas.AsQueryable();
-            var actors = _context.Actors.AsQueryable();
+            //var categories = _context.Categories.AsQueryable();
+            var categories = await _categoryRepositry.GetListAsync();
+            //var cinemas = _context.Cinemas.AsQueryable();
+            var cinemas = await _cinemaRepositry.GetListAsync();
+            //var actors = _context.Actors.AsQueryable();
+            var actors = await _actorRepositry.GetListAsync();
 
             return View(new MovieVM()
             {
@@ -94,13 +129,15 @@ namespace Cinema.Areas.Admin.Controllers
                 Categories = categories.ToList(),
                 Cinemas = cinemas.ToList(),
                 Actors = actors.ToList(),
-                MovieSubImages = _context.MovieSubImages.Where(m => m.MovieId == id).ToList()
+                //MovieSubImages = _context.MovieSubImages.Where(m => m.MovieId == id).ToList()
+                MovieSubImages = (await _movieSubImageRepositry.GetListAsync(m => m.MovieId == id)).ToList()
             });
         }
         [HttpPost]
-        public IActionResult Update(Movie movie, IFormFile ImageFile, List<IFormFile> SubImages, List<int> ActorIds)
+        public async Task<IActionResult> Update(Movie movie, IFormFile ImageFile, List<IFormFile> SubImages, List<int> ActorIds)
         {
-            var movieInDb = _context.Movies.Include(a => a.Actors).FirstOrDefault(b => b.Id == movie.Id);
+            //var movieInDb = _context.Movies.Include(a => a.Actors).FirstOrDefault(b => b.Id == movie.Id);
+            var movieInDb = await _movieRepositry.GetOneAsync(b => b.Id == movie.Id, includes: [b => b.Id == movie.Id]);
 
             if (movieInDb == null)
             {
@@ -149,7 +186,8 @@ namespace Cinema.Areas.Admin.Controllers
             movieInDb.Actors.Clear();
             if (ActorIds != null && ActorIds.Count > 0)
             {
-                var selectedActors = _context.Actors.Where(a => ActorIds.Contains(a.Id)).ToList();
+                //var selectedActors = _context.Actors.Where(a => ActorIds.Contains(a.Id)).ToList();
+                var selectedActors = (await _actorRepositry.GetListAsync(a => ActorIds.Contains(a.Id))).ToList();
                 foreach (var actor in selectedActors)
                 {
                     movieInDb.Actors.Add(actor);
@@ -159,10 +197,11 @@ namespace Cinema.Areas.Admin.Controllers
             //SubImages
             if (SubImages != null && SubImages.Count > 0)
             {
-                var oldSubImages = _context.MovieSubImages.Where(p => p.MovieId == movie.Id);
+                //var oldSubImages = _context.MovieSubImages.Where(p => p.MovieId == movie.Id);
+                var oldSubImages = await _movieSubImageRepositry.GetListAsync(p => p.MovieId == movie.Id);
 
                 //delete from wwwroot
-                foreach(var item in oldSubImages)
+                foreach (var item in oldSubImages)
                 {
                     var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Movie", item.Image);
 
@@ -172,10 +211,11 @@ namespace Cinema.Areas.Admin.Controllers
                     }
                 }
 
-
                 // delete from Datebase
-                _context.MovieSubImages.RemoveRange(oldSubImages);
-                _context.SaveChanges();
+                //_context.MovieSubImages.RemoveRange(oldSubImages);
+                _movieSubImageRepositry.RemoveRange(oldSubImages);
+                //_context.SaveChanges();
+                await _movieSubImageRepositry.CommitAsync();
 
                 foreach (var image in SubImages)
                 {
@@ -189,24 +229,33 @@ namespace Cinema.Areas.Admin.Controllers
                             image.CopyTo(stream);
                         }
 
-                        _context.MovieSubImages.Add(new MovieSubImage()
+                        //_context.MovieSubImages.Add(new MovieSubImage()
+                        //{
+                        //    Image = fileName,
+                        //    MovieId = movie.Id
+                        //});
+
+                        await _movieSubImageRepositry.AddAsync(new MovieSubImage()
                         {
                             Image = fileName,
                             MovieId = movie.Id
                         });
                     }
                 }
-                _context.SaveChanges();
+                //_context.SaveChanges();
+                await _movieSubImageRepositry.CommitAsync();
             }
 
-           
-            _context.SaveChanges();
+
+            //_context.SaveChanges();
+            await _movieRepositry.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var movie = _context.Movies.FirstOrDefault(c => c.Id == id);
+            //var movie = _context.Movies.FirstOrDefault(c => c.Id == id);
+            var movie = await _movieRepositry.GetOneAsync(c => c.Id == id);
 
             if(movie == null)
             {
@@ -220,7 +269,8 @@ namespace Cinema.Areas.Admin.Controllers
                 System.IO.File.Delete(filePath);
             }
 
-            var oldSubImages = _context.MovieSubImages.Where(p => p.MovieId == movie.Id);
+            //var oldSubImages = _context.MovieSubImages.Where(p => p.MovieId == movie.Id);
+            var oldSubImages = await _movieSubImageRepositry.GetListAsync(p => p.MovieId == movie.Id);
 
             //delete from wwwroot
             foreach (var item in oldSubImages)
@@ -235,9 +285,12 @@ namespace Cinema.Areas.Admin.Controllers
 
 
             // delete from Datebase
-            _context.MovieSubImages.RemoveRange(oldSubImages);
-            _context.Movies.Remove(movie);
-            _context.SaveChanges();
+            //_context.MovieSubImages.RemoveRange(oldSubImages);
+            _movieSubImageRepositry.RemoveRange(oldSubImages);
+            //_context.Movies.Remove(movie);
+            _movieRepositry.Remove(movie);
+            //_context.SaveChanges();
+            await _movieRepositry.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
 

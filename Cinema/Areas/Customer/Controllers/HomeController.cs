@@ -1,5 +1,6 @@
 using Cinema.Data;
 using Cinema.Models;
+using Cinema.Repositories;
 using Cinema.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,8 +11,14 @@ namespace Cinema.Areas.Customer.Controllers
     [Area("Customer")]
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context = new ApplicationDbContext();
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;// = new ApplicationDbContext();
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
         {
             var vm = new HomeVM
             {

@@ -1,4 +1,5 @@
 ﻿using Cinema.Data;
+using Cinema.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using static System.Net.WebRequestMethods;
@@ -8,13 +9,19 @@ namespace Cinema.Areas.Customer.Controllers
     [Area("Customer")]
     public class CinemaController : Controller
     {
-        private readonly ApplicationDbContext _context = new ApplicationDbContext();
-        public IActionResult Index(string Name , int page = 1)
+        private readonly ApplicationDbContext _context;// = new ApplicationDbContext();
+
+        public CinemaController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index(string Name , int page = 1)
         {
             var cinemas = _context.Cinemas.AsQueryable();
 
             // filter 
-            if(Name != null)
+            if (Name != null)
             {
                 cinemas = cinemas.Where(a => a.Name.Contains(Name));
             }

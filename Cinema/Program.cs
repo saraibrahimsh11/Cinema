@@ -1,3 +1,7 @@
+using Cinema.Data;
+using Cinema.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 namespace Cinema
 {
     public class Program
@@ -8,6 +12,23 @@ namespace Cinema
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            var connectionString =
+                builder.Configuration.GetConnectionString("DefaultConnection")
+                    ?? throw new InvalidOperationException("Connection string"
+                    + "'DefaultConnection' not found.");
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString)
+                );
+
+            builder.Services.AddScoped(typeof(IRepositry<>), typeof(Repositry<>));
+
+            builder.Services.AddScoped<IRepositry<Movie>, Repositry<Movie>>();
+            builder.Services.AddScoped<IRepositry<Models.Cinema>, Repositry<Models.Cinema>>();
+            builder.Services.AddScoped<IRepositry<Actor>, Repositry<Actor>>();
+            builder.Services.AddScoped<IMovieSubImageRepositry, MovieSubImageRepositry>();
+
 
             var app = builder.Build();
 
