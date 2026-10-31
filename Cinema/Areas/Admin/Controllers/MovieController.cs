@@ -137,7 +137,7 @@ namespace Cinema.Areas.Admin.Controllers
         public async Task<IActionResult> Update(Movie movie, IFormFile ImageFile, List<IFormFile> SubImages, List<int> ActorIds)
         {
             //var movieInDb = _context.Movies.Include(a => a.Actors).FirstOrDefault(b => b.Id == movie.Id);
-            var movieInDb = await _movieRepositry.GetOneAsync(b => b.Id == movie.Id, includes: [b => b.Id == movie.Id]);
+            var movieInDb = await _movieRepositry.GetOneAsync(b => b.Id == movie.Id, includes:[ a => a.Actors]);
 
             if (movieInDb == null)
             {

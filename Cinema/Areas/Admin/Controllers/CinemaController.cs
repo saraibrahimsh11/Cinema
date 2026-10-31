@@ -65,7 +65,7 @@ namespace Cinema.Areas.Admin.Controllers
         public async Task<IActionResult> Update(Models.Cinema cinema , IFormFile ImageFile)
         {
             //var cinemaInDb = _context.Cinemas.AsNoTracking().FirstOrDefault(b => b.Id == cinema.Id);
-            var cinemaInDb = await _cinemaRepositry.GetOneAsync(b => b.Id == cinema.Id);
+            var cinemaInDb = await _cinemaRepositry.GetOneAsync(b => b.Id == cinema.Id, isTracked:false);
 
             if (ImageFile != null && ImageFile.Length > 0)
             {

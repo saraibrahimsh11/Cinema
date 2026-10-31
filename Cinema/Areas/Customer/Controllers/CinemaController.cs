@@ -9,16 +9,18 @@ namespace Cinema.Areas.Customer.Controllers
     [Area("Customer")]
     public class CinemaController : Controller
     {
-        private readonly ApplicationDbContext _context;// = new ApplicationDbContext();
+        //private readonly ApplicationDbContext _context = new ApplicationDbContext();
+        private readonly IRepositry<Models.Cinema> _cinemaRepositry;// = new Repositry<Models.Cinema>();
 
-        public CinemaController(ApplicationDbContext context)
+        public CinemaController(IRepositry<Models.Cinema> cinemaRepositry)
         {
-            _context = context;
+            _cinemaRepositry = cinemaRepositry;
         }
 
         public async Task<IActionResult> Index(string Name , int page = 1)
         {
-            var cinemas = _context.Cinemas.AsQueryable();
+            //var cinemas = _context.Cinemas.AsQueryable();
+            var cinemas = await _cinemaRepositry.GetListAsync();
 
             // filter 
             if (Name != null)
@@ -27,7 +29,8 @@ namespace Cinema.Areas.Customer.Controllers
             }
 
             // pagination
-            ViewBag.Cinemas = _context.Cinemas.ToList();
+            //ViewBag.Cinemas = _context.Cinemas.ToList();
+            ViewBag.Cinemas = (await _cinemaRepositry.GetListAsync()).ToList();
             ViewBag.TotalPages = (int)Math.Ceiling(cinemas.Count() / 4.0);
             ViewBag.CurrentPage = page;
 
