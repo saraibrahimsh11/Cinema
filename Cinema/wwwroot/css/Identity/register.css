@@ -1,0 +1,260 @@
+/*------------------Auth pages (Register / Login)--------------------------*/
+
+.auth-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0 20px;
+}
+
+.form-panel.auth-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 32px 32px 26px;
+}
+
+.auth-head {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.auth-brand {
+    font: 400 36px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 3px;
+    line-height: 1;
+    color: var(--gold);
+}
+
+.auth-title {
+    margin-top: 12px;
+    font: 400 30px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 1px;
+    color: var(--text);
+}
+
+.auth-sub {
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.auth-summary {
+    margin-bottom: 16px;
+}
+
+    .auth-summary ul {
+        margin: 0;
+        padding-left: 18px;
+    }
+
+.auth-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 14px;
+}
+
+.form-panel.auth-card .form-group {
+    margin-bottom: 18px;
+}
+
+.form-panel.auth-card label {
+    margin-bottom: 7px;
+    font-size: 14px;
+}
+
+.form-panel.auth-card input {
+    padding: 12px 15px;
+    font-size: 15px;
+    border-radius: 12px;
+}
+
+.form-panel.auth-card .field-error {
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.auth-card .btn-block {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+    margin-top: 8px;
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+
+.auth-switch {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #30263a;
+    text-align: center;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+    .auth-switch a {
+        margin-left: 4px;
+        font-weight: 700;
+        color: var(--gold);
+        text-decoration: none;
+    }
+
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+@media (max-width: 520px) {
+    .form-panel.auth-card {
+        padding: 24px 18px 20px;
+    }
+
+    .auth-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*------------------Form (base)--------------------------*/
+
+.form-panel {
+    max-width: 900px;
+    padding: 32px;
+    background: #231a2b !important;
+    border: 1px solid #322840;
+    border-radius: 18px;
+}
+
+    .form-panel label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: #c9b3bf !important;
+    }
+
+    .form-panel input,
+    .form-panel textarea {
+        display: block;
+        width: 100%;
+        padding: 13px 16px;
+        font: 400 17px "DM Sans", sans-serif;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        caret-color: #e8b030;
+        background: #3a2d48 !important;
+        border: 1px solid #4a3a5c !important;
+        border-radius: 12px;
+        outline: none;
+    }
+
+        .form-panel input::placeholder,
+        .form-panel textarea::placeholder {
+            color: #a68a98 !important;
+            -webkit-text-fill-color: #a68a98 !important;
+            opacity: 1;
+        }
+
+        .form-panel input:focus,
+        .form-panel textarea:focus {
+            border-color: #e8b030 !important;
+            box-shadow: 0 0 0 3px rgba(232, 176, 48, .15);
+        }
+
+        .form-panel input[hidden] {
+            display: none;
+        }
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.field-error {
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+    color: #ff6b81;
+}
+
+    .field-error:empty {
+        display: none;
+    }
+
+/*------------------Login: Remember me--------------------------*/
+
+.auth-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: -2px 0 18px;
+}
+
+.form-panel.auth-card .check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+    /* لازم نلغي قاعدة .form-panel input اللي بتخلي كل input بعرض 100% */
+    .form-panel.auth-card .check input[type="checkbox"] {
+        position: relative;
+        display: inline-block;
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        margin: 0;
+        border-radius: 6px;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+        .form-panel.auth-card .check input[type="checkbox"]:checked {
+            background: var(--gold) !important;
+            border-color: var(--gold) !important;
+        }
+
+            .form-panel.auth-card .check input[type="checkbox"]:checked::after {
+                content: "";
+                position: absolute;
+                left: 6px;
+                top: 2px;
+                width: 5px;
+                height: 10px;
+                border: solid #2a1c05;
+                border-width: 0 2px 2px 0;
+                transform: rotate(45deg);
+            }
+
+        .form-panel.auth-card .check input[type="checkbox"]:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+.auth-forgot {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+}
+
+    .auth-forgot:hover {
+        text-decoration: underline;
+    }
+
+
+.auth-guest,
+.auth-guest:focus {
+    display: block;
+    margin-top: 14px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .15s;
+}
+
+    .auth-guest:hover {
+        color: var(--gold);
+        text-decoration: none;
+    }

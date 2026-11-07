@@ -1,0 +1,92 @@
+/*------------------Sidebar: Log in / Sign up--------------------------*/
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-auth {
+    margin-top: auto;
+    padding: 14px 8px 0;
+    border-top: 1px solid var(--line);
+}
+
+/* لما العميل يكون داخل */
+.sidebar-user {
+    display: block;
+    padding: 0 6px 8px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.side-link {
+    display: block;
+    padding: 11px 14px;
+    border-radius: 11px;
+    font: 500 15px "DM Sans", sans-serif;
+    color: var(--link);
+    text-decoration: none;
+    transition: background .15s, color .15s;
+}
+
+    .side-link:hover {
+        background: var(--red);
+        color: #ffffff;
+        box-shadow: 0 8px 24px rgba(204, 34, 68, .3);
+    }
+
+/* Log in or Sign up */
+.linkrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 4px 0 6px;
+}
+
+    .linkrow a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font: 600 14px "DM Sans", sans-serif;
+        text-decoration: none;
+        transition: background .15s, color .15s;
+    }
+
+        .linkrow a.lr-login,
+        .linkrow a.lr-login:focus {
+            color: var(--link);
+        }
+
+            .linkrow a.lr-login:hover {
+                color: #ffffff;
+                background: rgba(255, 255, 255, .07);
+            }
+
+        .linkrow a.lr-signup,
+        .linkrow a.lr-signup:hover,
+        .linkrow a.lr-signup:focus {
+            color: var(--gold);
+        }
+
+            .linkrow a.lr-signup:hover {
+                background: rgba(232, 176, 48, .14);
+            }
+
+.lr-or {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+@media (max-width: 800px) {
+    .sidebar-auth {
+        margin-top: 14px;
+        padding-top: 12px;
+    }
+
+    .sidebar-user {
+        display: none;
+    }
+}
