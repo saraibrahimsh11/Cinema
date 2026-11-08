@@ -1,6 +1,8 @@
 using Cinema.Data;
 using Cinema.Repositories;
+using Cinema.Utilites;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema
@@ -26,8 +28,9 @@ namespace Cinema
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
-                //options.SignIn.RequireConfirmedEmail = true;
-            }).AddEntityFrameworkStores<ApplicationDbContext>();
+                options.SignIn.RequireConfirmedEmail = true;
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
             builder.Services.AddScoped(typeof(IRepositry<>), typeof(Repositry<>));
 
@@ -35,7 +38,7 @@ namespace Cinema
             builder.Services.AddScoped<IRepositry<Models.Cinema>, Repositry<Models.Cinema>>();
             builder.Services.AddScoped<IRepositry<Actor>, Repositry<Actor>>();
             builder.Services.AddScoped<IMovieSubImageRepositry, MovieSubImageRepositry>();
-
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             var app = builder.Build();
 

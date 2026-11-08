@@ -258,3 +258,21 @@
         color: var(--gold);
         text-decoration: none;
     }
+
+
+.auth-resend {
+    margin: 0 0 16px;
+    font-size: 14px;
+    color: #a899b0;
+}
+
+    .auth-resend a {
+        margin-left: 6px;
+        font-weight: 700;
+        color: #e8b230;
+        text-decoration: none;
+    }
+
+        .auth-resend a:hover {
+            text-decoration: underline;
+        }
