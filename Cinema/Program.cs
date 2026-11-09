@@ -38,6 +38,7 @@ namespace Cinema
             builder.Services.AddScoped<IRepositry<Models.Cinema>, Repositry<Models.Cinema>>();
             builder.Services.AddScoped<IRepositry<Actor>, Repositry<Actor>>();
             builder.Services.AddScoped<IMovieSubImageRepositry, MovieSubImageRepositry>();
+            builder.Services.AddScoped<IRepositry<ApplicationUserOtp>, Repositry<ApplicationUserOtp>>();
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             var app = builder.Build();

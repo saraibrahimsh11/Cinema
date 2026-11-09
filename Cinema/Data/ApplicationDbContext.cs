@@ -15,6 +15,7 @@ namespace Cinema.Data
         public DbSet<Models.Cinema> Cinemas { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<MovieSubImage> MovieSubImages { get; set; }
+        public DbSet<ApplicationUserOtp> ApplicationUserOtps { get; set; }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

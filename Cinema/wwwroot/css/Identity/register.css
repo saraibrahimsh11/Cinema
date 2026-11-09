@@ -276,3 +276,56 @@
         .auth-resend a:hover {
             text-decoration: underline;
         }
+
+
+/*------------------Verify OTP--------------------------*/
+
+.otp-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+    color: var(--gold);
+    background: #3a2d48;
+    border-radius: 50%;
+}
+
+.otp-card .auth-sub strong {
+    color: var(--text);
+}
+
+.otp-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 8px 0;
+}
+
+.form-panel.auth-card .otp-boxes .otp-box {
+    width: 64px;
+    height: 72px;
+    padding: 0;
+    font: 700 30px "DM Sans", sans-serif;
+    text-align: center;
+    border-radius: 14px;
+    caret-color: transparent;
+}
+
+.otp-error {
+    margin-bottom: 14px;
+    text-align: center;
+}
+
+@media (max-width: 420px) {
+    .otp-boxes {
+        gap: 8px;
+    }
+
+    .form-panel.auth-card .otp-boxes .otp-box {
+        width: 56px;
+        height: 64px;
+        font-size: 26px;
+    }
+}
