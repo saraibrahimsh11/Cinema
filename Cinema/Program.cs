@@ -1,6 +1,7 @@
 using Cinema.Data;
 using Cinema.Repositories;
 using Cinema.Utilites;
+using Cinema.Utilites.DbSeeding;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ namespace Cinema
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,13 @@ namespace Cinema
             }).AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                // Redirect paths
+                options.LoginPath = "/Identity/Account/Login";               // Where to redirect unauthenticated users
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied"; // Where to redirect forbidden users
+            });
+
             builder.Services.AddScoped(typeof(IRepositry<>), typeof(Repositry<>));
 
             builder.Services.AddScoped<IRepositry<Movie>, Repositry<Movie>>();
@@ -40,9 +48,14 @@ namespace Cinema
             builder.Services.AddScoped<IMovieSubImageRepositry, MovieSubImageRepositry>();
             builder.Services.AddScoped<IRepositry<ApplicationUserOtp>, Repositry<ApplicationUserOtp>>();
             builder.Services.AddTransient<IEmailSender, EmailSender>();
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
             var app = builder.Build();
-
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                await dbInitializer.InitializeAsync();
+            }
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -54,12 +67,13 @@ namespace Cinema
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{area=Identity}/{controller=Account}/{action=Register}/{id?}")
+                pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             app.Run();

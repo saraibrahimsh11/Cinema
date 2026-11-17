@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Access denied";
+}
+
+<div class="container">
+    <div class="denied-wrap">
+        <div class="denied-card">
+
+            <div class="denied-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="11" width="16" height="10" rx="2" />
+                    <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                </svg>
+            </div>
+
+            <p class="denied-code">403</p>
+            <h1 class="denied-title">Access denied</h1>
+            <p class="denied-text">
+                You don't have permission to view this page.
+                If you think this is a mistake, try another account.
+            </p>
+
+            <div class="denied-actions">
+                <a class="btn" href="/Customer/Home/Index">Back to home</a>
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a class="denied-link" href="/Identity/Account/Logout">Log out and switch account</a>
+                }
+                else
+                {
+                    <a class="denied-link" href="/Identity/Account/Login">Log in</a>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

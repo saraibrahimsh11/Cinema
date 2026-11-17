@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Cinema.Repositories;
+using Cinema.Utilites;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Cinema.Repositories;
+using Microsoft.AspNetCore.Mvc;
 namespace Cinema.Areas.Identity.Controllers
 {
     [Area("Identity")]
@@ -55,6 +56,7 @@ namespace Cinema.Areas.Identity.Controllers
                 );
 
             TempData["Successfull_Notification"] = "Registration Successfully";
+            await _userManager.AddToRoleAsync(user, CD.CUSTOMER);
             return RedirectToAction(nameof(Login));
         }
 
@@ -250,6 +252,19 @@ namespace Cinema.Areas.Identity.Controllers
                 return View(resetPasswordVM);
             }
             return RedirectToAction(nameof(Login));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _singInManger.SignOutAsync();
+            return RedirectToAction(nameof(Login));
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

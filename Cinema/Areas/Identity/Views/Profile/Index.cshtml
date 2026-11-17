@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "My Profile";
+}
+@model ApplicationUserVM
+
+<link rel="stylesheet" href="~/css/identity/profile.css" asp-append-version="true" />
+
+<div class="profile-page">
+
+    <div class="profile-header">
+        <div>
+            <span class="profile-eyebrow">ACCOUNT SETTINGS</span>
+            <h1>My Profile</h1>
+            <p>Manage your personal information and account security.</p>
+        </div>
+
+        <a href="/Customer/Home/Index" class="back-home">
+            ← Back to Home
+        </a>
+    </div>
+
+    <div class="profile-overview">
+        <div class="profile-avatar">@User.Identity.Name.Substring(0,1)</div>
+
+        <div class="profile-overview-info">
+            <h2>@User.Identity.Name</h2>
+            <span class="account-status">● Active Account</span>
+        </div>
+
+        <div class="profile-badge">
+            CINIMA MEMBER
+        </div>
+    </div>
+
+    <div class="profile-grid">
+
+        <!-- Personal Information -->
+        <section class="profile-card">
+
+            <div class="card-heading">
+                <div class="heading-icon">01</div>
+                <div>
+                    <h3>Personal Information</h3>
+                    <p>Update your personal details.</p>
+                </div>
+            </div>
+
+            <form asp-area="Identity"
+                  asp-controller="Profile"
+                  asp-action="UpdateProfile"
+                  method="post">
+
+                <div class="profile-form-group">
+                    <label for="Name">Full Name</label>
+                    <input asp-for="Name" type="text"
+                           id="Name"
+                           placeholder="Enter your full name"
+                            />
+                </div>
+
+                <div class="profile-form-group">
+                    <label for="Email">Email Address</label>
+                    <input asp-for="Email" disabled type="email"
+                           id="Email"
+                           placeholder="Enter your email"
+                            />
+                </div>
+
+                <div class="profile-form-group">
+                    <label for="PhoneNumber">Phone Number</label>
+                    <input asp-for="PhoneNumber" type="tel"
+                           id="PhoneNumber"
+                           placeholder="Enter your phone number" />
+                </div>
+
+                <button type="submit" class="profile-btn">
+                    Save Changes
+                </button>
+
+            </form>
+        </section>
+
+
+        <!-- Change Password -->
+        <section class="profile-card">
+
+            <div class="card-heading">
+                <div class="heading-icon">02</div>
+                <div>
+                    <h3>Change Password</h3>
+                    <p>Keep your account secure.</p>
+                </div>
+            </div>
+
+            <form asp-area="Identity"
+                  asp-controller="Profile"
+                  asp-action="UpdatePassword"
+                  method="post">
+
+                <div class="profile-form-group">
+                    <label for="OldPassword">Current Password</label>
+                    <input asp-for="CurrentPassword" type="password"
+                           id="OldPassword"
+                           placeholder="Enter current password"
+                           autocomplete="current-password" />
+                </div>
+
+                <div class="profile-form-group">
+                    <label for="NewPassword">New Password</label>
+                    <input asp-for="NewPassword" type="password"
+                           id="NewPassword"
+                           placeholder="Enter new password" />
+                </div>
+
+                <div class="profile-form-group">
+                    <label for="ConfirmPassword">Confirm New Password</label>
+                    <input asp-for="ConfirmNewPassword" type="password"
+                           id="ConfirmPassword"
+                           placeholder="Confirm new password"/>
+                </div>
+
+                <button type="submit" class="profile-btn">
+                    Update Password
+                </button>
+
+            </form>
+        </section>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_NotificationPartial" />
+    <partial name="_ValidationScriptsPartial" />
+}

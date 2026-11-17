@@ -1,11 +1,14 @@
 ﻿using Cinema.Data;
 using Cinema.Models;
 using Cinema.Repositories;
+using Cinema.Utilites;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cinema.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN} , {CD.EMPLOYEE}")]
     public class CategoryController : Controller
     {
         //private readonly ApplicationDbContext _context = new ApplicationDbContext();
@@ -39,6 +42,7 @@ namespace Cinema.Areas.Admin.Controllers
             await _categoryRepositry.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
+        [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN}")]
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
@@ -50,6 +54,7 @@ namespace Cinema.Areas.Admin.Controllers
             }
             return View(category);
         }
+        [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN}")]
         [HttpPost]
         public async Task<IActionResult> Update(Category category)
         {
@@ -63,7 +68,7 @@ namespace Cinema.Areas.Admin.Controllers
             await _categoryRepositry.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN}")]
         public async Task<IActionResult> Delete(int id)
         {
             //var category = _context.Categories.FirstOrDefault(c => c.Id == id);

@@ -1,12 +1,15 @@
 ﻿using Cinema.Data;
 using Cinema.Models;
 using Cinema.Repositories;
+using Cinema.Utilites;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN} , {CD.EMPLOYEE}")]
     public class CinemaController : Controller
     {
         //private readonly ApplicationDbContext _context = new ApplicationDbContext();
@@ -50,6 +53,7 @@ namespace Cinema.Areas.Admin.Controllers
             await _cinemaRepositry.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
+        [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN}")]
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
@@ -61,6 +65,7 @@ namespace Cinema.Areas.Admin.Controllers
             }
             return View(cinema);
         }
+        [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN}")]
         [HttpPost]
         public async Task<IActionResult> Update(Models.Cinema cinema , IFormFile ImageFile)
         {
@@ -96,7 +101,7 @@ namespace Cinema.Areas.Admin.Controllers
             await _cinemaRepositry.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN}")]
         public async Task<IActionResult> Delete(int id)
         {
             //var cinema = _context.Cinemas.FirstOrDefault(c => c.Id == id);

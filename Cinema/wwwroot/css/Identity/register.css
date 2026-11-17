@@ -329,3 +329,81 @@
         font-size: 26px;
     }
 }
+
+/*------------------Access denied--------------------------*/
+
+.denied-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 24px 0;
+}
+
+.denied-card {
+    width: 100%;
+    max-width: 480px;
+    padding: 40px 32px 32px;
+    text-align: center;
+    background: #231a2b;
+    border: 1px solid #322840;
+    border-radius: 18px;
+}
+
+.denied-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 14px;
+    color: #ff6b81;
+    background: rgba(204, 34, 68, .15);
+    border-radius: 50%;
+}
+
+.denied-code {
+    margin: 0;
+    font: 400 84px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 6px;
+    line-height: 1;
+    color: var(--gold);
+}
+
+.denied-title {
+    margin-top: 6px;
+    font: 400 34px "Bebas Neue", Impact, sans-serif;
+    letter-spacing: 1px;
+    color: var(--text);
+}
+
+.denied-text {
+    max-width: 360px;
+    margin: 12px auto 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted);
+}
+
+.denied-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-top: 26px;
+}
+
+    .denied-actions .btn {
+        margin-left: 0;
+        padding: 13px 30px;
+    }
+
+.denied-link,
+.denied-link:focus {
+    font-size: 14px;
+    color: var(--link);
+    text-decoration: none;
+}
+
+    .denied-link:hover {
+        color: var(--gold);
+        text-decoration: underline;
+    }

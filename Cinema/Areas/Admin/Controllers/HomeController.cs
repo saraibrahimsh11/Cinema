@@ -1,7 +1,9 @@
 using Cinema.Data;
 using Cinema.Models;
 using Cinema.Repositories;
+using Cinema.Utilites;
 using Cinema.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -9,6 +11,7 @@ using System.Diagnostics;
 namespace Cinema.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN} , {CD.EMPLOYEE}")]
     public class HomeController : Controller
     {
         //private readonly ApplicationDbContext _context = new ApplicationDbContext();

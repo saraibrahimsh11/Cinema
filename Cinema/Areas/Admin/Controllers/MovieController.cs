@@ -1,13 +1,16 @@
 ﻿using Cinema.Data;
 using Cinema.Models;
 using Cinema.Repositories;
+using Cinema.Utilites;
 using Cinema.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cinema.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN} , {CD.EMPLOYEE}")]
     public class MovieController : Controller
     {
         //private readonly ApplicationDbContext _context = new ApplicationDbContext();
@@ -107,6 +110,7 @@ namespace Cinema.Areas.Admin.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN}")]
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
@@ -133,6 +137,7 @@ namespace Cinema.Areas.Admin.Controllers
                 MovieSubImages = (await _movieSubImageRepositry.GetListAsync(m => m.MovieId == id)).ToList()
             });
         }
+        [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN}")]
         [HttpPost]
         public async Task<IActionResult> Update(Movie movie, IFormFile ImageFile, List<IFormFile> SubImages, List<int> ActorIds)
         {
@@ -251,7 +256,7 @@ namespace Cinema.Areas.Admin.Controllers
             await _movieRepositry.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = $"{CD.SUPER_ADMIN} , {CD.ADMIN}")]
         public async Task<IActionResult> Delete(int id)
         {
             //var movie = _context.Movies.FirstOrDefault(c => c.Id == id);
