@@ -162,6 +162,24 @@ namespace Cinema.Migrations
                     b.ToTable("ApplicationUserOtps");
                 });
 
+            modelBuilder.Entity("Cinema.Models.Cart", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.HasKey("ApplicationUserId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Carts");
+                });
+
             modelBuilder.Entity("Cinema.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -428,6 +446,25 @@ namespace Cinema.Migrations
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Cinema.Models.Cart", b =>
+                {
+                    b.HasOne("Cinema.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Cinema.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("Cinema.Models.Movie", b =>

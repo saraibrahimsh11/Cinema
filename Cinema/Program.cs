@@ -5,6 +5,7 @@ using Cinema.Utilites.DbSeeding;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 namespace Cinema
 {
@@ -49,6 +50,8 @@ namespace Cinema
             builder.Services.AddScoped<IRepositry<ApplicationUserOtp>, Repositry<ApplicationUserOtp>>();
             builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())

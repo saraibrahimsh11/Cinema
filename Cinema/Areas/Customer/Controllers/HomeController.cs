@@ -13,16 +13,18 @@ namespace Cinema.Areas.Customer.Controllers
     {
         //private readonly ApplicationDbContext _context = new ApplicationDbContext();
         private readonly IRepositry<Movie> _movieRepositry;// = new Repositry<Movie>();
+        private readonly IRepositry<MovieSubImage> _movieSubImageRepositry;// = new Repositry<Movie>();
         private readonly IRepositry<Category> _categoryRepositry;// = new Repositry<Category>();
         private readonly IRepositry<Models.Cinema> _cinemaRepositry;// = new Repositry<Models.Cinema>();
         private readonly IRepositry<Actor> _actorRepositry;// = new Repositry<Actor>();
 
-        public HomeController(IRepositry<Movie> movieRepositry, IRepositry<Category> categoryRepositry, IRepositry<Models.Cinema> cinemaRepositry, IRepositry<Actor> actorRepositry)
+        public HomeController(IRepositry<Movie> movieRepositry, IRepositry<Category> categoryRepositry, IRepositry<Models.Cinema> cinemaRepositry, IRepositry<Actor> actorRepositry, IRepositry<MovieSubImage> movieSubImageRepositry)
         {
             _movieRepositry = movieRepositry;
             _categoryRepositry = categoryRepositry;
             _cinemaRepositry = cinemaRepositry;
             _actorRepositry = actorRepositry;
+            _movieSubImageRepositry = movieSubImageRepositry;
         }
 
         public async Task<IActionResult> Index()
@@ -50,6 +52,26 @@ namespace Cinema.Areas.Customer.Controllers
             };
 
             return View(vm);
+        }
+
+        public async Task<IActionResult> MovieDetails(int id)
+        {
+            var movie = await _movieRepositry.GetOneAsync(
+                    m => m.Id == id,
+                    includes: [m => m.Category, m => m.Cinema, m => m.Actors],
+                    isTracked: false
+                    );
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            var subImages = (await _movieSubImageRepositry.GetListAsync(m => m.MovieId == id, isTracked: false)).ToList();
+            return View(new MovieVM
+            {
+                Movie = movie,
+                MovieSubImages = subImages
+            });
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,146 @@
+﻿@using Cinema.ViewModel
+@using System.Globalization
+@model MovieVM
+@{
+    var movie = Model.Movie!;
+    var subImages = Model.MovieSubImages ?? new List<MovieSubImage>();
+    ViewData["Title"] = movie.Name;
+
+    var statusText = movie.Status switch
+    {
+        1 => "Now Showing",
+        2 => "Coming Soon",
+        3 => "Ended",
+        _ => "Not set"
+    };
+
+    var canBook = movie.Status == 1 && movie.Quantity > 0;
+    var closedReason = movie.Status == 2 ? "Booking opens when the movie starts showing."
+                     : movie.Status == 3 ? "This movie has ended."
+                     : movie.Quantity <= 0 ? "Sold out." : "";
+
+    var images = new List<string> { movie.MainImg };
+    images.AddRange(subImages.Select(s => s.Image));
+}
+
+<div class="md">
+
+    <a class="md-back" asp-action="Index">&larr; Back to movies</a>
+
+    <div class="md-grid">
+
+        <section class="gallery">
+            @for (var i = 0; i < images.Count; i++)
+            {
+                <input type="radio" name="gal" id="g@(i)" class="g-radio" checked="@(i == 0)" />
+                <div class="g-slide">
+                    <img src="/images/Movie/@images[i]" alt="@movie.Name" />
+                </div>
+            }
+
+            @if (images.Count > 1)
+            {
+                <div class="g-thumbs">
+                    @for (var i = 0; i < images.Count; i++)
+                    {
+                        <label for="g@(i)" class="g-thumb">
+                            <img src="/images/Movie/@images[i]" alt="Photo @(i + 1)" />
+                        </label>
+                    }
+                </div>
+            }
+        </section>
+
+        <section class="md-info">
+
+            <div class="md-tags">
+                <span class="md-tag">@movie.Category.Name</span>
+                <span class="md-status s@(movie.Status)">@statusText</span>
+            </div>
+
+            <h1 class="md-title">@movie.Name</h1>
+
+            <div class="md-rating">
+                <span class="md-stars">
+                    @for (var s = 1; s <= 5; s++)
+                    {
+                        <span class="@(s <= movie.Rate ? "on" : "")">&#9733;</span>
+                    }
+                </span>
+                <span>@movie.Rate / 5</span>
+            </div>
+
+            <p class="md-desc">
+                @(string.IsNullOrWhiteSpace(movie.Description) ? "No description yet." : movie.Description)
+            </p>
+
+            <dl class="md-facts">
+                <div><dt>Cinema</dt><dd>@movie.Cinema.Name</dd></div>
+                <div><dt>Show time</dt><dd>@movie.DateTime.ToString("ddd, dd MMM yyyy · hh:mm tt", CultureInfo.InvariantCulture)</dd></div>
+                <div><dt>Seats left</dt><dd>@movie.Quantity</dd></div>
+            </dl>
+
+            @if (movie.Actors is { Count: > 0 })
+            {
+                <h3 class="md-sub">Cast</h3>
+                <div class="md-cast">
+                    @foreach (var actor in movie.Actors)
+                    {
+                        <span class="md-actor">
+                            <img src="/images/Actor/@actor.Img" alt="@actor.Name" />
+                            <span>@actor.Name</span>
+                        </span>
+                    }
+                </div>
+            }
+
+            @if (TempData["Error_Notification"] is string error)
+            {
+                <p class="md-closed">@error</p>
+            }
+
+            <form method="post" asp-area="Customer" asp-controller="Cart" asp-action="AddToCart" class="md-book">
+                <input type="hidden" name="movieId" value="@movie.Id" />
+
+                <div class="md-price">
+                    <span>Price per ticket</span>
+                    <strong>@movie.Price.ToString("0.##", CultureInfo.InvariantCulture) EGP</strong>
+                </div>
+
+                @if (canBook)
+                {
+                    <div class="md-tickets">
+                        <label for="tickets">Tickets</label>
+                        <div class="stepper">
+                            <button type="button" class="stepper-btn" data-step="-1" aria-label="Decrease tickets">&minus;</button>
+                            <input type="number" id="tickets" name="tickets" min="1" max="@movie.Quantity" value="1" />
+                            <button type="button" class="stepper-btn" data-step="1" aria-label="Increase tickets">+</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn md-book-btn">Book now</button>
+                }
+                else
+                {
+                    <button type="button" class="btn md-book-btn" disabled>Booking unavailable</button>
+                    <p class="md-closed">@closedReason</p>
+                }
+            </form>
+
+        </section>
+
+    </div>
+</div>
+@section Scripts {
+    <script>
+        const input = document.getElementById('tickets');
+
+        if (input) {
+            document.querySelectorAll('.stepper-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (btn.dataset.step === '1') input.stepUp(); else input.stepDown();
+                });
+            });
+        }
+    </script>
+}

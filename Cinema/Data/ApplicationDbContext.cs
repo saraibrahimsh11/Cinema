@@ -14,6 +14,7 @@ namespace Cinema.Data
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Models.Cinema> Cinemas { get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Cart> Carts { get; set; }
         public DbSet<MovieSubImage> MovieSubImages { get; set; }
         public DbSet<ApplicationUserOtp> ApplicationUserOtps { get; set; }
 
